@@ -1,14 +1,40 @@
-# ReHab-FrontEnd
-ReHab 프론트엔드 팀 개발 저장소입니다.
+# MotuS-FrontEnd
+비대면 운동 학습 플랫폼, "MotuS" 프론트엔드 팀 개발 저장소입니다.
 
-## 🔥Frontend Team
+## 🔥 Frontend Team
 
 |                                      오소현                                      |                                      김경재                                      |
 | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
 | <img width="150px" src="https://avatars.githubusercontent.com/u/53892427?v=4" /> | <img width="150px" src="https://avatars.githubusercontent.com/u/35104213?v=4" /> |
-|                  [@osohyun0224](https://github.com/osohyun0224)                  |                   [@PortalCube](https://github.com/PortalCube)                   |
+|한림대학교|한림대학교|
+|빅데이터전공 4학년|빅데이터전공 2학년|
+|                  [@osohyun0224](https://github.com/osohyun0224)                  |                   [@PortalCube](https://github.com/PortalCube)                   |<br/>
 
-## 💡 Commit Convention
+## 🧑🏻‍💻 Frontend Usage
+
+```bash
+git clone https://github.com/MotuS-Web/MotuS-FrontEnd
+cd MotuS-FrontEnd
+```
+### Npm & Dev & Build
+```javascript
+npm install
+npm start build
+npm run dev
+```
+
+## 📚 Frontend Tech Stacks
+
+**Stack**|**Version**|**Why**
+:-------:|:---------:|:------:
+React.js|`18.2.0`|  많은 사용자들이 오랜 기간동안 사용하여 다른 프레임워크에 비해 오픈 소스 생태계가 활발하며, <br/>   컴포넌트 단위로 분리하여 개발을 할 수 있어 분업하기 좋고 생산성이 탁월하기 때문에 도입
+Redux|`8.1.2`| 모든 상태 업데이트를 액션으로 정의하고,  <br/>  액션 정보에 기반하여 Reducer에서 상태를 업데이트하기 때문에 <br/>  상태를 더욱 쉽게 예측 가능하게 하여 유지보수 측면에 긍정적인 효과가 있어 <br/> 상태 관리를 하는 컨테이너로 채택
+@reduxjs/toolkit|`1.9.5`| Redux를 사용하면서 생기는 boilerplate 코드를 줄이고, <br/> Redux 코드 작성에 필요한 도구와 헬퍼를 갖추기 위함. <br/> 또한 불변성을 유지하면서 상태 업데이트를 간소화하고, <br/> 비동기 작업을 쉽게 관리하기 위해 도입
+Styled-Components|`6.0.6`| 스타일 작성의 생산성 향상을 위하여 CSS-in-JS 도입
+axios|`1.5.0`| API 통신에 사용하기 위해 도입
+Vercel |[Link](motus-frontend.vercel.app)| 다른 개발 팀과의 협업 시 프론트 개발 현황을 vercel로 호스팅한 것으로 확인이 가능해 이해를 도움.  <br/>  또한 빌드 도구로 활용해 개발시 오류를 바로 확인이 가능함.
+
+## 💡 Frontend Commit Convention
 
 |       Tags       |               Explanation               |
 | :--------------: | :-------------------------------------: |
