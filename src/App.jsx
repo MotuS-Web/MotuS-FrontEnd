@@ -1,11 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
-import SignUpPage from "./pages/SignUpPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
 import MainPage from "./pages/MainPage.jsx";
 import styled from "styled-components";
-import MyCourse from "./pages/MyCourse.jsx";
-import CourseDetail from "./pages/CourseDetail.jsx";
 import AddExercise from "./pages/AddExercise.jsx";
 import { ModalProvider } from "./librarys/context.jsx";
 import PlayerPage from "./pages/PlayerPage.jsx";
@@ -25,9 +21,7 @@ const Container = styled.div`
 
 const routerList = [
   { path: "/", element: <MainPage /> },
-  { path: "/program/:pno", element: <CourseDetail />, role: 1 },
   { path: "/program/:id/play", element: <PlayerPage />, role: 1 },
-  { path: "/mycourse", element: <MyCourse />, role: 1 },
   { path: "/register", element: <AddExercise />, role: 2 },
 ];
 
