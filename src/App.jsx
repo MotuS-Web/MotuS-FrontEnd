@@ -7,7 +7,6 @@ import { ModalProvider } from "./librarys/context.jsx";
 import PlayerPage from "./pages/PlayerPage.jsx";
 import store from "./redux/store.js";
 
-import LoginModal from "./components/LoginModal.jsx";
 import { useEffect } from "react";
 import { loadToken } from "./librarys/login-api.js";
 import { login } from "./redux/userSlice.js";
@@ -53,7 +52,6 @@ function App() {
     <Provider store={store}>
       <ModalProvider>
         <Container>
-          <LoginModal />
           <Router>
             <Routes>
               {routerList.map((item, index) => (
