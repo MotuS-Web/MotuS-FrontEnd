@@ -6,10 +6,6 @@ import AddExercise from "./pages/AddExercise.jsx";
 import { ModalProvider } from "./librarys/context.jsx";
 import PlayerPage from "./pages/PlayerPage.jsx";
 import store from "./redux/store.js";
-
-import { useEffect } from "react";
-import { loadToken } from "./librarys/login-api.js";
-import { login } from "./redux/userSlice.js";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import "./App.scss";
 
@@ -21,7 +17,7 @@ const Container = styled.div`
 const routerList = [
   { path: "/", element: <MainPage /> },
   { path: "/program/:id/play", element: <PlayerPage />, role: 1 },
-  { path: "/register", element: <AddExercise />, role: 2 },
+  { path: "/register", element: <AddExercise />}
 ];
 
 routerList.forEach((item) => {
@@ -35,19 +31,6 @@ routerList.forEach((item) => {
 });
 
 function App() {
-  const dispatch = store.dispatch;
-
-  // Login logic
-  useEffect(() => {
-    loadToken().then((result) => {
-      if (!result) {
-        return;
-      } else {
-        dispatch(login(result));
-      }
-    });
-  });
-
   return (
     <Provider store={store}>
       <ModalProvider>
