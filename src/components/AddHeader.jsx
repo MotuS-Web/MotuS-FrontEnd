@@ -23,7 +23,7 @@ const Title = styled.h2`
 `;
 
 const ButtonContainer = styled.div`
-  margin-left: 1200px;
+  margin-left: 1125px;
 `;
 
 const AddHeader = () => {
