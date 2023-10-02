@@ -11,12 +11,14 @@ const ButtonContainer = styled.button`
   border: none;
   padding: 0 10px; 
   cursor: pointer;
+  margin-top: 20px; 
 `;
 
 const ButtonIcon = styled.img`
-  width: 20px;
+  width: 30px;
   height: 20px; 
-  margin-right: 10px; 
+  margin-left:10px;
+  margin-right: 10px;
 `;
 
 const ButtonText = styled.span`

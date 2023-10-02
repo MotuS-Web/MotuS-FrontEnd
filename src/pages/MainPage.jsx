@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Header from '../components/Header';
 
 const PageContainer = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ const CenteredContainer = styled.div`
 const MainPage = () => {
   return (
     <PageContainer>
-
+      <Header/>
       <CenteredContainer>
       </CenteredContainer>
     </PageContainer>

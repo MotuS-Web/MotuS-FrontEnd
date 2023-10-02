@@ -9,6 +9,7 @@ const SearchContainer = styled.div`
   border-radius: 50px;  
   display: flex;
   align-items: center;
+  margin-top: 20px;
 `;
 
 const SearchIcon = styled.img`
