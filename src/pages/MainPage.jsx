@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
+import FilterButtons from '../components/FilterButtons';
 
 const PageContainer = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ const MainPage = () => {
     <PageContainer>
       <Header/>
       <CenteredContainer>
+      <FilterButtons/>
       </CenteredContainer>
     </PageContainer>
   );
