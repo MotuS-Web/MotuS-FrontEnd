@@ -6,6 +6,7 @@ import LogoImage from "../assets/icons/LOGO.png";
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom:-10px;
 `;
 
 const Logo = styled.img`

@@ -5,7 +5,7 @@ const FilterSection = styled.div`
   display: flex;
   align-items: center;
   margin-right: 10px;
-  margin-top: 20px
+  margin-top: 20px;
 `;
 
 const Title = styled.span`
