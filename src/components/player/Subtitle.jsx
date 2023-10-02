@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import SearchBar from "../SearchBar";
+import UploadButton from "../UploadButton";
+import LogoImage from "../../assets/LOGO.png";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
