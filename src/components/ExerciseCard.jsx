@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import {useState} from 'react';
+import ExerciseModal from './ExerciseModal';
 
 const CourseCardContainer = styled.div`
   width: 360px;
@@ -59,16 +60,26 @@ const Hash = styled.span`
   color: #727272;
 `;
 
-const ExerciseCard = ({ id, image, title, tags }) => {  
-  return (
-    <Link to={`/program/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-      <CourseCardContainer>
-      <CourseImage image={image}>
-    <TimeInfo>
-        <TimeText>00:00</TimeText> 
-    </TimeInfo>
-</CourseImage>
+const ExerciseCard = ({ image, title, tags, description }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleCardClick = (e) => {
+    e.stopPropagation();  
+    setIsModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <>
+      <CourseCardContainer onClick={handleCardClick}>
+        <CourseImage image={image}>
+          <TimeInfo>
+            <TimeText>00:00</TimeText>
+          </TimeInfo>
+        </CourseImage>
         <CourseTitle>{title}</CourseTitle>
         <div>
           {tags && tags.map((tag, index) => (
@@ -79,14 +90,23 @@ const ExerciseCard = ({ id, image, title, tags }) => {
           ))}
         </div>
       </CourseCardContainer>
-    </Link>
+      {isModalOpen && (
+        <ExerciseModal
+          video={image}
+          title={title}
+          description={description}
+          tags={tags}
+          onClose={handleCloseModal}
+        />
+      )}
+    </>
   );
 };
 
 ExerciseCard.propTypes = {
-  id: PropTypes.number.isRequired,
   image: PropTypes.string,
   title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string)
 };
 
