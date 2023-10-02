@@ -31,9 +31,6 @@ routerList.forEach((item) => {
 });
 
 function App() {
-
-
-
   return (
     <Provider store={store}>
       <ModalProvider>

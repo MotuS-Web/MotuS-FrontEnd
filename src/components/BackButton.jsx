@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import PropTypes from 'prop-types'; 
 import BackIcon from '../assets/icons/Page-left.png';
 
 const BackButtonContainer = styled.button`
@@ -18,25 +17,21 @@ const BackButtonContainer = styled.button`
 `;
 
 const BackImage = styled.img`
-    margin-right: 10px;
+  margin-right: 10px;
 `;
 
 const BackText = styled.span`
-    font-size: 14px;
-    color: #667080;
+  font-size: 14px;
+  color: #000000;
 `;
 
-const BackButton = ({ pageName }) => {
+const BackButton = () => {
     return (
         <BackButtonContainer>
             <BackImage src={BackIcon} alt="Back" />
-            <BackText>{pageName}으로 돌아가기</BackText>
+            <BackText>메인페이지로 돌아가기</BackText>
         </BackButtonContainer>
     );
 }
-
-BackButton.propTypes = {
-  pageName: PropTypes.string.isRequired, 
-};
 
 export default BackButton;
