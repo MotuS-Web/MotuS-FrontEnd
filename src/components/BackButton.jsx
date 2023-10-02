@@ -23,6 +23,7 @@ const BackImage = styled.img`
 const BackText = styled.span`
   font-size: 14px;
   color: #000000;
+  font-weight: bold;
 `;
 
 const BackButton = () => {
