@@ -6,7 +6,6 @@ import AddExercise from "./pages/AddExercise.jsx";
 import { ModalProvider } from "./librarys/context.jsx";
 import PlayerPage from "./pages/PlayerPage.jsx";
 import store from "./redux/store.js";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import "./App.scss";
 
 const Container = styled.div`
@@ -14,21 +13,13 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const routerList = [
+const routeList = [
   { path: "/", element: <MainPage /> },
-  { path: "/program/:id/play", element: <PlayerPage />, role: 1 },
+  { path: "/program/:id", element: <PlayerPage /> },
   { path: "/register", element: <AddExercise />}
-];
-
-routerList.forEach((item) => {
-  if (item.role && item.role > 0) {
-    item.element = (
-      <ProtectedRoute role={item.role} to={item.redirect}>
-        {item.element}
-      </ProtectedRoute>
-    );
-  }
-});
+].map((item, index) => (
+  <Route key={index} path={item.path} element={item.element} />
+));
 
 function App() {
   return (
@@ -37,9 +28,7 @@ function App() {
         <Container>
           <Router>
             <Routes>
-              {routerList.map((item, index) => (
-                <Route key={index} path={item.path} element={item.element} />
-              ))}
+              {routeList}
             </Routes>
           </Router>
         </Container>
