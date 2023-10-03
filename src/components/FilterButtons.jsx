@@ -1,40 +1,47 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+const Container = styled.div`
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+`;
+
 const FilterSection = styled.div`
+  height: 36px;
   display: flex;
   align-items: center;
-  margin-right: 10px;
-  margin-top: 20px;
+  gap: 12px;
 `;
 
-const Title = styled.span`
-  font-size: 20px;
-  font-weight: bold;
-  color: #5f5f5f;
+const Header = styled.div`
   width: 120px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-right: 10px;
-`;
+  display: flex;
+  justify-content: space-between;
 
-const Divider = styled.div`
-  width: 2px;
-  height: 20px;
-  background-color: #5f5f5f;
-  margin-right: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #5f5f5f;
+
+  &::after {
+    content: "";
+    width: 2px;
+    height: 20px;
+    background-color: #5f5f5f;
+  }
 `;
 
 const Button = styled.button`
   width: 100px;
-  height: 36px;
+  height: 100%;
   background-color: ${(props) => (props.selected ? "#6968CC" : "#1E1E1E")};
   color: #f2f2f2;
   border-radius: 10px;
   font-size: 16px;
   border: none;
-  margin-right: 5px;
+  cursor: pointer;
 
   &:focus {
     outline: none;
@@ -46,10 +53,9 @@ const FilterButtons = () => {
   const [selectedPose, setSelectedPose] = useState("전체");
 
   return (
-    <div>
+    <Container>
       <FilterSection>
-        <Title>카테고리</Title>
-        <Divider />
+        <Header>카테고리</Header>
         {["전체", "팔", "어깨", "무릎", "허벅지"].map((category) => (
           <Button
             key={category}
@@ -66,8 +72,7 @@ const FilterButtons = () => {
       </FilterSection>
 
       <FilterSection>
-        <Title>자세</Title>
-        <Divider />
+        <Header>자세</Header>
         {["전체", "선 자세", "앉은 자세", "누운 자세"].map((pose) => (
           <Button
             key={pose}
@@ -80,7 +85,7 @@ const FilterButtons = () => {
           </Button>
         ))}
       </FilterSection>
-    </div>
+    </Container>
   );
 };
 
