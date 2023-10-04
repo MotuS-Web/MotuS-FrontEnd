@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const HeaderContainer = styled.div`
   width: 100%;
   margin: 24px auto;
-  margin-bottom: 0;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: center;

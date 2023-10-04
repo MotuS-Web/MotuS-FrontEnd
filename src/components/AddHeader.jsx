@@ -1,39 +1,33 @@
 import styled from "styled-components";
 import LogoImage from "../assets/icons/LOGO.png";
 import BackButton from "./BackButton";
+import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.div`
+  width: 100%;
+  margin: 24px auto;
   display: flex;
   align-items: center;
-  margin-bottom:-10px;
+  justify-content: center;
+  gap: 16px;
 `;
 
-const Logo = styled.img`
-  margin-top: 20px;
-  margin-left: 420px;
-  margin-right: 10px;
-`;
+const Logo = styled.img``;
 
 const Title = styled.h2`
   font-size: 36px;
   font-weight: bold;
-  color: #F2F2F2;
-  margin-left: 10px;
-  margin-top: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  margin-left: 1125px;
+  color: #f2f2f2;
+  flex-grow: 1;
 `;
 
 const AddHeader = () => {
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
       <Logo src={LogoImage} alt="Logo" />
-      <Title>영상 등록하기</Title>
-      <ButtonContainer>
-        <BackButton/>
-      </ButtonContainer>
+      <Title>영상 게시하기</Title>
+      <BackButton onClick={() => navigate("/")} />
     </HeaderContainer>
   );
 };
