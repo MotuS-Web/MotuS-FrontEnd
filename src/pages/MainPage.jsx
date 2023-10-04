@@ -4,41 +4,20 @@ import FilterButtons from "../components/FilterButtons";
 import ExerciseList from "../components/ExerciseList";
 
 const PageContainer = styled.div`
+  width: 1200px;
+  padding-bottom: 64px;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-`;
-
-const CenteredContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  margin-top: 50px;
-`;
-
-const FilterGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  margin-top: -10px;
-  margin-left: -500px;
-  margin-bottom: 20px;
+  overflow: hidden;
 `;
 
 const MainPage = () => {
   return (
     <PageContainer>
       <Header />
-      <CenteredContainer>
-        <FilterGroup>
-          <FilterButtons />
-        </FilterGroup>
-        <ExerciseList />
-      </CenteredContainer>
+      <FilterButtons />
+      <ExerciseList />
     </PageContainer>
   );
 };

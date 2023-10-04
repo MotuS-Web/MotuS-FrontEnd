@@ -1,34 +1,34 @@
-import styled from 'styled-components';
-import Iconsearch from '../assets/icons/iconsearch.png';
+import styled from "styled-components";
+import Iconsearch from "../assets/icons/iconsearch.png";
 
 const SearchContainer = styled.div`
-  width: 750px;   
-  height: 50px;     
-  background-color: #242424;  
-  border: 1px solid #444444;  
-  border-radius: 50px;  
+  padding: 14px 16px;
+  background-color: #242424;
+  border: 1px solid #444444;
+  border-radius: 50px;
+  flex-grow: 1;
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  gap: 8px;
 `;
 
 const SearchIcon = styled.img`
-  width: 20px; 
+  width: 20px;
   height: 20px;
-  margin-left: 10px;
 `;
 
 const SearchInput = styled.input`
-  width: calc(100% - 40px); 
-  height: 100%;
   border: none;
   background-color: transparent;
-  font-size: 14px;
-  color: #000;
-  padding-left: 10px; 
+  font-size: 16px;
+  color: #f2f2f2;
+
+  flex-grow: 1;
+
   &::placeholder {
-    color: #C8C8C8;
+    color: #c8c8c8;
   }
+
   &:focus {
     outline: none;
   }

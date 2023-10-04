@@ -4,28 +4,22 @@ import styled from "styled-components";
 import LogoImage from "../assets/icons/LOGO.png";
 
 const HeaderContainer = styled.div`
+  width: 100%;
+  margin: 24px auto;
+  margin-bottom: 0;
   display: flex;
   align-items: center;
-  margin-bottom:-10px;
+  justify-content: center;
+  gap: 16px;
 `;
 
-const Logo = styled.img`
-  margin-top: 20px;
-  margin-left: 420px;
-  margin-right: 10px;
-`;
-
-const Spacer = styled.div`
-  width: 10px;
-`;
+const Logo = styled.img``;
 
 const Header = () => {
   return (
     <HeaderContainer>
       <Logo src={LogoImage} alt="Logo" />
-      <Spacer />
-      <SearchBar/>
-      <Spacer />
+      <SearchBar />
       <UploadButton />
     </HeaderContainer>
   );

@@ -1,29 +1,25 @@
-import styled from 'styled-components';
-import Iconupload from '../assets/icons/iconupload.png';
+import styled from "styled-components";
+import Iconupload from "../assets/icons/iconupload.png";
 
 const ButtonContainer = styled.button`
-  width: 170px;
-  height: 44px;
-  background-color: #6968CC;
+  padding: 12px 24px;
+  background-color: #6968cc;
   border-radius: 10px;
   display: flex;
   align-items: center;
   border: none;
-  padding: 0 10px; 
   cursor: pointer;
-  margin-top: 20px; 
+  gap: 8px;
 `;
 
 const ButtonIcon = styled.img`
-  width: 30px;
-  height: 20px; 
-  margin-left:10px;
-  margin-right: 10px;
+  width: 27px;
+  height: 18px;
 `;
 
 const ButtonText = styled.span`
   font-size: 16px;
-  color: #F2F2F2;
+  color: #f2f2f2;
 `;
 
 const UploadButton = () => {
