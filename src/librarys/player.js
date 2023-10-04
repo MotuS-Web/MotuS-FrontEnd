@@ -7,6 +7,7 @@ function sleep(ms) {
 
 class Player {
   static #instance = null;
+
   videoStream = null;
   guideDuration = null;
   name = null;
@@ -163,14 +164,6 @@ class Player {
   }
 
   async onRecordComplete(data) {
-    // const blobUrl = URL.createObjectURL(data);
-    // const element = document.createElement("a");
-    // element.href = blobUrl;
-    // element.download = "Recorded Video.webm";
-    // element.click();
-
-    // return;
-
     const formData = new FormData();
     formData.append("vno", this.videoId);
     formData.append("video_file", data);
@@ -190,11 +183,7 @@ class Player {
     const score = response ? response.metrics : 0.01;
     console.log(this.videoId, this.userId, score);
 
-    const modifyResponse = await modifyMetrics(
-      this.videoId,
-      this.userId,
-      score,
-    );
+    await modifyMetrics(this.videoId, this.userId, score);
 
     this.onComplete(time, score);
   }

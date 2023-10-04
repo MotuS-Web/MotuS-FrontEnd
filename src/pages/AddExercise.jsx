@@ -67,8 +67,8 @@ const TitleC = styled.h2`
   font-size: 24px;
   color: #ffffff;
   margin-bottom: 10px;
-  margin-top:10px;
-  margin-left:-470px;
+  margin-top: 10px;
+  margin-left: -470px;
 `;
 
 const LeftContainer = styled.div`
@@ -122,17 +122,21 @@ const Button = styled.button`
   font-size: 16px;
   border: none;
   margin-right: 5px;
+  cursor: pointer;
 
   &:focus {
     outline: none;
   }
+
+  &:hover {
+    background-color: ${(props) => (props.selected ? "#7c7aca" : "#343434")};
+  }
 `;
 
 const UploadButtonContainer = styled.div`
-  margin-top:20px;
+  margin-top: 20px;
   margin-left: 520px;
 `;
-
 
 const AddExercise = () => {
   const [title, setTitle] = useState("");
@@ -174,8 +178,8 @@ const AddExercise = () => {
                 onChange={handleDescriptionChange}
               />
             </TextContainer>
-              <TitleC>카테고리 및 태그</TitleC>
-              <div>
+            <TitleC>카테고리 및 태그</TitleC>
+            <div>
               <FilterSection>
                 <Title>카테고리</Title>
                 <Divider />
@@ -202,7 +206,9 @@ const AddExercise = () => {
                     key={pose}
                     selected={selectedPose === pose}
                     onClick={() => {
-                      setSelectedPose((current) => (current === pose ? "전체" : pose));
+                      setSelectedPose((current) =>
+                        current === pose ? "전체" : pose,
+                      );
                     }}
                   >
                     {pose}
@@ -211,8 +217,8 @@ const AddExercise = () => {
               </FilterSection>
             </div>
             <UploadButtonContainer>
-            <UploadButton />
-              </UploadButtonContainer>
+              <UploadButton />
+            </UploadButtonContainer>
           </RightContainer>
         </CenteredContainer>
       </PageContainer>

@@ -8,6 +8,17 @@ const CourseCardContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  cursor: pointer;
+  background-color: #ffffff00;
+  outline: 8px solid #ffffff00;
+  transition:
+    outline 0.2s,
+    background-color 0.2s;
+
+  &:hover {
+    outline: 24px solid #ffffff1f;
+    background-color: #ffffff1f;
+  }
 `;
 
 const CourseTitle = styled.p`

@@ -31,9 +31,11 @@ function ExerciseList() {
 
   return (
     <Container>
-      {course ? (
-        <ExerciseModal onClose={() => setCourse(null)} {...course} />
-      ) : null}
+      <ExerciseModal
+        visible={course}
+        onClose={() => setCourse(null)}
+        {...course}
+      />
       {list.map((course) => (
         <ExerciseCard
           key={course.id}

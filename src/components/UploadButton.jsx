@@ -22,9 +22,9 @@ const ButtonText = styled.span`
   color: #f2f2f2;
 `;
 
-const UploadButton = () => {
+const UploadButton = ({ ...props }) => {
   return (
-    <ButtonContainer>
+    <ButtonContainer {...props}>
       <ButtonIcon src={Iconupload} alt="Upload Icon" />
       <ButtonText>영상 게시하기</ButtonText>
     </ButtonContainer>
