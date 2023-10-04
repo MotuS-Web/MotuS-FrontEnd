@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
-  margin-top: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,6 +19,7 @@ const FilterSection = styled.div`
 const Header = styled.div`
   width: 120px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
   font-size: 20px;
@@ -48,15 +49,37 @@ const Button = styled.button`
   }
 `;
 
-const FilterButtons = () => {
+const FilterButtons = ({ all }) => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [selectedPose, setSelectedPose] = useState("전체");
+
+  const [categoryList, setCategoryList] = useState([
+    "전체",
+    "팔",
+    "어깨",
+    "무릎",
+    "허벅지",
+  ]);
+
+  const [poseList, setPoseList] = useState([
+    "전체",
+    "선 자세",
+    "앉은 자세",
+    "누운 자세",
+  ]);
+
+  useEffect(() => {
+    if (!all) {
+      setCategoryList(categoryList.filter((item) => item !== "전체"));
+      setPoseList(poseList.filter((item) => item !== "전체"));
+    }
+  }, []);
 
   return (
     <Container>
       <FilterSection>
         <Header>카테고리</Header>
-        {["전체", "팔", "어깨", "무릎", "허벅지"].map((category) => (
+        {categoryList.map((category) => (
           <Button
             key={category}
             selected={selectedCategory === category}
@@ -73,7 +96,7 @@ const FilterButtons = () => {
 
       <FilterSection>
         <Header>자세</Header>
-        {["전체", "선 자세", "앉은 자세", "누운 자세"].map((pose) => (
+        {poseList.map((pose) => (
           <Button
             key={pose}
             selected={selectedPose === pose}
@@ -87,6 +110,14 @@ const FilterButtons = () => {
       </FilterSection>
     </Container>
   );
+};
+
+FilterButtons.propTypes = {
+  all: PropTypes.bool,
+};
+
+FilterButtons.defaultProps = {
+  all: false,
 };
 
 export default FilterButtons;
