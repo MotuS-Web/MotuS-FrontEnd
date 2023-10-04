@@ -1,5 +1,8 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
-import Tag from "./Tag";
+import Tag from "./Tag.jsx";
+import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -11,6 +14,16 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   z-index: 1000;
+
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity 0.2s;
+
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+  }
 `;
 
 const ModalContainer = styled.div`
@@ -23,6 +36,12 @@ const ModalContainer = styled.div`
   flex-direction: column;
   align-self: flex-start;
   gap: 12px;
+
+  transition: transform 0.2s ease;
+
+  &:not(.visible) {
+    transform: scale(0.9);
+  }
 `;
 
 const VideoPlaceholder = styled.div`
@@ -63,40 +82,64 @@ const TagTitle = styled.span`
   font-family: "SUIT Variable", sans-serif;
 `;
 
-const EnrollButton = styled.button`
+const Button = styled.button`
   padding: 10px 24px;
-  background-color: #6968cc;
-  color: #f1f1f1;
-  font-size: 16px;
+  background-color: ${(props) => (props.type ? "#6968CC" : "#f2f2f2")};
+  color: ${(props) => (props.type ? "#f2f2f2" : "#242424")};
   border-radius: 10px;
+  font-size: 16px;
   border: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: ${(props) => (props.type ? "#4e4bae" : "#c6c6c6")};
+  }
 `;
 
-const CloseButton = styled.button`
-  padding: 10px 24px;
-  background-color: #f2f2f2;
-  color: #242424;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-`;
-
-const ExerciseModal = ({ video, title, description, tags, onClose }) => {
+const ExerciseModal = ({
+  visible,
+  id,
+  video,
+  title,
+  description,
+  tags,
+  onClose,
+}) => {
+  const navigate = useNavigate();
   return (
-    <ModalOverlay>
-      <ModalContainer>
+    <ModalOverlay className={classNames({ visible })}>
+      <ModalContainer className={classNames({ visible })}>
         <VideoPlaceholder></VideoPlaceholder>
         <Title>{title}</Title>
         <Description>{description}</Description>
         <BottomContainer>
           <TagTitle># 관련 태그</TagTitle>
           <Tag style={{ flexGrow: 1 }} list={tags} />
-          <EnrollButton>수강하기</EnrollButton>
-          <CloseButton onClick={onClose}>닫기</CloseButton>
+          <Button type={true} onClick={() => navigate("/program/" + id)}>
+            수강하기
+          </Button>
+          <Button onClick={onClose}>닫기</Button>
         </BottomContainer>
       </ModalContainer>
     </ModalOverlay>
   );
+};
+
+ExerciseModal.propTypes = {
+  visible: PropTypes.bool,
+  video: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.string),
+  onClose: PropTypes.func,
+};
+
+ExerciseModal.defaultProps = {
+  tags: [],
 };
 
 export default ExerciseModal;

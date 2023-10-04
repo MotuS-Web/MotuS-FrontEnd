@@ -9,7 +9,6 @@ const PageContainer = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 `;
 
 const MainPage = () => {
