@@ -84,8 +84,8 @@ const TagTitle = styled.span`
 
 const Button = styled.button`
   padding: 10px 24px;
-  background-color: ${(props) => (props.type ? "#6968CC" : "#f2f2f2")};
-  color: ${(props) => (props.type ? "#f2f2f2" : "#242424")};
+  background-color: ${(props) => (props.$isActive ? "#6968CC" : "#f2f2f2")};
+  color: ${(props) => (props.$isActive ? "#f2f2f2" : "#242424")};
   border-radius: 10px;
   font-size: 16px;
   border: none;
@@ -119,9 +119,7 @@ const ExerciseModal = ({
         <BottomContainer>
           <TagTitle># 관련 태그</TagTitle>
           <Tag style={{ flexGrow: 1 }} list={tags} />
-          <Button type={true} onClick={() => navigate("/program/" + id)}>
-            수강하기
-          </Button>
+          <Button $isActive onClick={() => navigate("/program/" + id)}>수강하기</Button>
           <Button onClick={onClose}>닫기</Button>
         </BottomContainer>
       </ModalContainer>
