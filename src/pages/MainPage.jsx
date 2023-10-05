@@ -5,6 +5,7 @@ import FilterButtons from "../components/FilterButtons";
 import ExerciseCard from "../components/ExerciseCard";
 import ExerciseModal from "../components/ExerciseModal";
 import { getPrograms } from "../librarys/exercise-api";
+import { CATEGORY, POSITION } from "../librarys/type";
 
 const PageContainer = styled.div`
   width: 1200px;
@@ -25,7 +26,7 @@ const ExerciseContainer = styled.div`
 const MainPage = () => {
   const [list, setList] = useState([]);
   const [course, setCourse] = useState(null);
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
   useEffect(() => {
     async function fetchCourses() {
       try {
@@ -41,25 +42,52 @@ const MainPage = () => {
     fetchCourses();
   }, []);
 
-  function openModal(vno) {  
-    const selectedCourse = list.filter((item) => item.vno === vno)[0];
-    const tags = [selectedCourse.category, selectedCourse.posture];
-    selectedCourse.tags = tags;
-    setCourse(selectedCourse);
-}
+  function openModal(vno) {
+    const selectedCourse = list.find((item) => item.vno === vno);
+    if (selectedCourse) {
+      const tags = [selectedCourse.category, selectedCourse.posture].map(
+        convertToKoreanTag
+      );
+      selectedCourse.tags = tags;
+      setCourse(selectedCourse);
+    } else {
+      console.error('선택된 강좌를 찾을 수 없습니다. vno:', vno);
+    }
+  }
+
+  useEffect(() => {
+    console.log("현재 course 상태:", course);
+  }, [course]);
+
+  function convertToKoreanTag(tag) {
+    for (const category of CATEGORY) {
+      if (tag === category.key) return category.value;
+    }
+
+    for (const position of POSITION) {
+      if (tag === position.key) return position.value;
+    }
+
+    return tag;
+  }
 
   return (
     <PageContainer>
       <Header />
       <FilterButtons />
       <ExerciseContainer>
+        {console.log(course)}
         <ExerciseModal
-          visible={course}
-          onClose={() => setCourse(null)}
+          key={course ? course.vno : 'initial-key'}
+          visible={isModalVisible}
+          onClose={() => {
+            setIsModalVisible(false);
+            setCourse(null);
+          }}
           {...course}
         />
         {list.map((course) => {
-          const tags = [course.category, course.posture];  
+          const tags = [course.category, course.posture];
           return (
             <ExerciseCard
               key={course.vno}
@@ -72,6 +100,7 @@ const MainPage = () => {
       </ExerciseContainer>
     </PageContainer>
   );
+
 };
 
 export default MainPage;

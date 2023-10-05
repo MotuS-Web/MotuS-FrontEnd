@@ -25,10 +25,12 @@ const Time = styled.p`
 `;
 
 function formatTime(seconds) {
-  const min = Math.floor(seconds / 60);
-  const sec = seconds % 60;
+  const totalSeconds = Math.floor(seconds); 
+  const min = Math.floor(totalSeconds / 60);
+  const sec = totalSeconds % 60;
   return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
 }
+
 
 const Thumbnail = ({ src, time }) => {
   const formattedTime = formatTime(time);
