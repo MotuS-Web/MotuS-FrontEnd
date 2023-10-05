@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { CATEGORY, POSITION } from "../librarys/type";
-import { ReducerContext } from "../librarys/context";
+import { ReducerContext } from "../librarys/context.js";
 
 const Container = styled.div`
   display: flex;
