@@ -119,7 +119,6 @@ const ExerciseModal = ({
         <Description>{description}</Description>
         <BottomContainer>
           <TagTitle># 관련 태그</TagTitle>
-          
           <Tag style={{ flexGrow: 1 }} list={tags} />
           <Button $isActive onClick={() => navigate("/program/" + id)}>수강하기</Button>
           <Button onClick={onClose}>닫기</Button>
@@ -138,7 +137,6 @@ ExerciseModal.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
   onClose: PropTypes.func,
 };
-
 
 ExerciseModal.defaultProps = {
   tags: [],

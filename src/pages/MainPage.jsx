@@ -5,7 +5,7 @@ import FilterButtons from "../components/FilterButtons";
 import ExerciseCard from "../components/ExerciseCard";
 import ExerciseModal from "../components/ExerciseModal";
 import { getPrograms, getProgramDetail } from "../librarys/exercise-api";
-import { CATEGORY, POSITION } from "../librarys/type";
+import { CATEGORY, POSITION} from "../librarys/type";
 
 const PageContainer = styled.div`
   width: 1200px;
@@ -46,11 +46,11 @@ const MainPage = () => {
 
   async function openModal(id) {
     try {
-      const selectedCourse = await getProgramDetail(id);
-      console.log("선택된 강좌의 category와 posture:", selectedCourse.category, selectedCourse.posture);
-
+      const selectedCourse = await getProgramDetail(id);  
       if (selectedCourse) {
-        const tags = [selectedCourse.category, selectedCourse.posture].map(convertToKoreanTag);
+        const tags = [selectedCourse.category, selectedCourse.position].map(
+          convertToKoreanTag
+        );
         selectedCourse.tags = tags;
         setCourse(selectedCourse);
         setIsModalVisible(true);
@@ -78,8 +78,6 @@ const MainPage = () => {
     return tag;
   }
 
-  
-
   return (
     <PageContainer>
       <Header />
@@ -97,7 +95,7 @@ const MainPage = () => {
           />
         )}
         {list.map((courseItem) => {
-          const tags = [courseItem.category, courseItem.posture];
+          const tags = [courseItem.category, courseItem.position];
           return (
             <ExerciseCard
               key={courseItem.id}

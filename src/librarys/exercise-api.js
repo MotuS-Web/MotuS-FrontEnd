@@ -137,7 +137,7 @@ function toExerciseSchema(data) {
     title: data.title,
     description: data.description,
     category: data.category,
-    posture: data.position,   
+    position: data.position,   
     time: data.playTime,      
     videoURL: data.videoURL,
     thumbnailURL: data.thumbnailURL,
