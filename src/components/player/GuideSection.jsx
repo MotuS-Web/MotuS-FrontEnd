@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 
 import Player from "../../librarys/player";
-import { DispatchContext, StateContext } from "../../librarys/context";
+import { DispatchContext, StateContext } from "../../librarys/context.jsx";
 
 const Container = styled.div`
   max-width: 20%;
