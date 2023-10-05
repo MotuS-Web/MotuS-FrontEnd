@@ -12,7 +12,6 @@ class Player {
   guideDuration = null;
   name = null;
   id = null;
-  userId = null;
   videoId = null;
   status = 0;
 
@@ -181,10 +180,6 @@ class Player {
     }
 
     const score = response ? response.metrics : 0.01;
-    console.log(this.videoId, this.userId, score);
-
-    await modifyMetrics(this.videoId, this.userId, score);
-
     this.onComplete(time, score);
   }
 }
