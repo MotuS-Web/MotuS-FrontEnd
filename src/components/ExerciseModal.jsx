@@ -110,6 +110,7 @@ const ExerciseModal = ({
   onClose,
 }) => {
   const navigate = useNavigate();
+  console.log("태그 정보:", tags);
   return (
     <ModalOverlay className={classNames({ visible })}>
       <ModalContainer className={classNames({ visible })}>
@@ -118,6 +119,7 @@ const ExerciseModal = ({
         <Description>{description}</Description>
         <BottomContainer>
           <TagTitle># 관련 태그</TagTitle>
+          
           <Tag style={{ flexGrow: 1 }} list={tags} />
           <Button $isActive onClick={() => navigate("/program/" + id)}>수강하기</Button>
           <Button onClick={onClose}>닫기</Button>
@@ -129,12 +131,14 @@ const ExerciseModal = ({
 
 ExerciseModal.propTypes = {
   visible: PropTypes.bool,
-  video: PropTypes.string,
-  title: PropTypes.string,
+  id: PropTypes.number,  
+  video: PropTypes.string,  
+  title: PropTypes.string.isRequired,
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   onClose: PropTypes.func,
 };
+
 
 ExerciseModal.defaultProps = {
   tags: [],

@@ -187,3 +187,13 @@ export async function getCourse(id, mid) {
 
   return toExerciseSchema(response.data);
 }
+
+export async function getProgramDetail(id) {
+  try {
+    const response = await fetch(`http://motus.website/video/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
+}
