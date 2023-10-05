@@ -30,7 +30,7 @@ const MainPage = () => {
     async function fetchCourses() {
       try {
         const response = await getPrograms();
-        console.log("API Response:", response); // 여기를 추가
+        console.log("API 응답 결과:", response);
         if (response && response.dtoList) {
           setList(response.dtoList);
         }
@@ -41,8 +41,8 @@ const MainPage = () => {
     fetchCourses();
   }, []);
 
-  function openModal(id) {
-    setCourse(list.filter((item) => item.id === id)[0]);
+  function openModal(vno) {  
+    setCourse(list.filter((item) => item.vno === vno)[0]);
   }
 
   return (
@@ -56,7 +56,7 @@ const MainPage = () => {
           {...course}
         />
         {list.map((course) => {
-          const tags = [course.category, course.position];
+          const tags = [course.category, course.posture];  
           return (
             <ExerciseCard
               key={course.vno}
