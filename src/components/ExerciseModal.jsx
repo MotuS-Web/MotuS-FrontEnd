@@ -138,6 +138,7 @@ ExerciseModal.propTypes = {
   onClose: PropTypes.func,
 };
 
+
 ExerciseModal.defaultProps = {
   tags: [],
 };

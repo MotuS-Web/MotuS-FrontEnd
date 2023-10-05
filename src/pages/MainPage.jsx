@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import FilterButtons from "../components/FilterButtons";
 import ExerciseCard from "../components/ExerciseCard";
 import ExerciseModal from "../components/ExerciseModal";
-import { getPrograms, getProgramDetail } from "../librarys/exercise-api";
+import { getPrograms} from "../librarys/exercise-api";
 import { CATEGORY, POSITION} from "../librarys/type";
 
 const PageContainer = styled.div`
@@ -30,6 +30,8 @@ const MainPage = () => {
 
   
   useEffect(() => {
+
+    
     async function fetchCourses() {
       try {
         const response = await getPrograms();
@@ -44,13 +46,11 @@ const MainPage = () => {
     fetchCourses();
   }, []);
 
-  async function openModal(id) {
+   function openModal(id) {
     try {
-      const selectedCourse = await getProgramDetail(id);  
+      const selectedCourse = list.find(course => course.id === Number(id));
       if (selectedCourse) {
-        const tags = [selectedCourse.category, selectedCourse.position].map(
-          convertToKoreanTag
-        );
+        const tags = [selectedCourse.category, selectedCourse.position].map(convertToKoreanTag);
         selectedCourse.tags = tags;
         setCourse(selectedCourse);
         setIsModalVisible(true);
@@ -58,7 +58,7 @@ const MainPage = () => {
         console.error('선택된 강좌를 찾을 수 없습니다. id:', id);
       }
     } catch (error) {
-      console.error("강좌 상세 정보를 불러오는 중 오류 발생:", error);
+      console.error("강좌 상세 정보를 가져오는 중 오류 발생:", error);
     }
   }
 
@@ -74,7 +74,6 @@ const MainPage = () => {
     for (const position of POSITION) {
       if (tag === position.key) return position.value;
     }
-
     return tag;
   }
 
