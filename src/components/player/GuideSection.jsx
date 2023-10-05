@@ -6,7 +6,7 @@ import { DispatchContext, StateContext } from "../../librarys/context";
 
 const Container = styled.div`
   max-width: 20%;
-  min-width: 300px;
+  min-width: 480px;
   width: 100%;
   position: absolute;
 

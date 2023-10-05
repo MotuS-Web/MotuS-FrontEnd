@@ -56,6 +56,7 @@ const Block = styled.div`
 const Loading = styled(ImSpinner2)`
   width: 36px;
   height: 36px;
+  color: #f2f2f2;
   animation: spin 3s infinite linear;
 
   @keyframes spin {
@@ -75,13 +76,13 @@ const Button = styled.button`
   padding: 12px 0;
   border: none;
   font-size: 18px;
-  color: rgba(0, 0, 0, 1);
-  background-color: rgba(20, 242, 198, 1);
+  color: #f2f2f2;
+  background-color: #6968cc;
 
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #38f0a0;
+    background-color: #4e4bae;
   }
 
   cursor: pointer;

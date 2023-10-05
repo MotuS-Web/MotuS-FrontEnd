@@ -33,7 +33,8 @@ const Content = styled.div`
   max-width: 400px;
   width: 100%;
   border-radius: 6px;
-  background-color: #ffffff;
+  background-color: #242424;
+  color: #f2f2f2;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 `;

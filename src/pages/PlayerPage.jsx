@@ -13,13 +13,10 @@ import { DispatchContext, StateContext } from "../librarys/context.jsx";
 import StartupModal from "../components/player/StartupModal.jsx";
 import ResultModal from "../components/player/ResultModal.jsx";
 import { intialPlayerState, playerReducer } from "../reducer/player.js";
-import { getCourse } from "../librarys/exercise-api.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { show } from "../redux/modalSlice.js";
-import { selectEmail, selectToken } from "../redux/userSlice.js";
 import { getVideo } from "../librarys/video-api.js";
 import BorderBox from "../components/player/BorderBox.jsx";
-import { modifyMetrics } from "../librarys/my-program-api.js";
 
 const Container = styled.div`
   width: 100%;
@@ -42,7 +39,6 @@ const PlayerPage = () => {
   const modalDispatch = useDispatch();
   const { subtitle, videoId } = state;
   const cameraRef = useRef(null);
-  const userId = useSelector(selectEmail);
 
   useEffect(() => {
     modalDispatch(show("startup_notice"));
@@ -73,21 +69,9 @@ const PlayerPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!userId) {
-      return;
-    }
-
-    Player.userId = userId;
-
     getVideo(Number(id)).then((data) => {
       if (!data) {
         alert("프로그램 데이터를 불러오는데 실패했습니다.");
-        return;
-      }
-
-      console.log(data);
-      if (!Array.isArray(data.videoList) || data.videoList.length === 0) {
-        alert("프로그램 가이드 영상이 없습니다. 영상을 추가하세요.");
         return;
       }
 
@@ -95,13 +79,13 @@ const PlayerPage = () => {
       dispatch({
         type: "setVideo",
         payload: {
-          id: data.videoList[0].vno,
-          url: data.videoList[0].url,
+          id: data.id,
+          url: data.url,
         },
       });
       Player.name = data.title;
     });
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     if (videoId) {
