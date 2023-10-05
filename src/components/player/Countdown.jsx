@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { StateContext } from "../../librarys/context";
+import { StateContext } from "../../librarys/context.jsx";
 
 const Container = styled.div`
   max-width: 700px;

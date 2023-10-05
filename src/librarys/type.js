@@ -1,8 +1,8 @@
 export const CATEGORY = [
-  { key: "ARMS", value: "팔" },
-  { key: "SHOULDERS", value: "어깨" },
-  { key: "KNEES", value: "무릎" },
-  { key: "THIGHS", value: "허벅지" },
+  { key: "ARM", value: "팔" },
+  { key: "SHOULDER", value: "어깨" },
+  { key: "KNEE", value: "무릎" },
+  { key: "THIGH", value: "허벅지" },
 ];
 
 export const POSITION = [
