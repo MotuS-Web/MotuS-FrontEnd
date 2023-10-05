@@ -63,9 +63,9 @@ const FilterButtons = ({ all , onChange}) => {
 
   const [poseList, setPoseList] = useState([
     "전체",
-    "선 자세",
-    "앉은 자세",
-    "누운 자세",
+    "선",
+    "앉은",
+    "누운",
   ]);
 
    const handleCategoryClick = (category) => {
@@ -106,9 +106,7 @@ const FilterButtons = ({ all , onChange}) => {
           <Button
             key={pose}
             selected={selectedPose === pose}
-            onClick={() => {
-              setSelectedPose((current) => (current === pose ? "전체" : pose));
-            }}
+            onClick={() => handlePoseClick(pose)} 
           >
             {pose}
           </Button>
