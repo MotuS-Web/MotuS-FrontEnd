@@ -42,8 +42,11 @@ const MainPage = () => {
   }, []);
 
   function openModal(vno) {  
-    setCourse(list.filter((item) => item.vno === vno)[0]);
-  }
+    const selectedCourse = list.filter((item) => item.vno === vno)[0];
+    const tags = [selectedCourse.category, selectedCourse.posture];
+    selectedCourse.tags = tags;
+    setCourse(selectedCourse);
+}
 
   return (
     <PageContainer>
