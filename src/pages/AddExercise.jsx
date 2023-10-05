@@ -1,9 +1,13 @@
 import AddHeader from "../components/AddHeader.jsx";
 import VideoUploader from "../components/VideoUploader.jsx";
 import styled from "styled-components";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import UploadButton from "../components/UploadButton.jsx";
-import FilterButtons from "../components/FilterButtons.jsx";
+import TagSelect from "../components/TagSelect.jsx";
+import { createVideo } from "../librarys/axios.js";
+import { useNavigate } from "react-router-dom";
+import { intialUploadState, uploadReducer } from "../reducer/upload.js";
+import { ReducerContext } from "../librarys/context.js";
 
 const PageContainer = styled.div`
   width: 1200px;
@@ -30,12 +34,13 @@ const Title = styled.h1`
   width: 100%;
   font-weight: bold;
   font-size: 24px;
-  color: #ffffff;
+  color: #f2f2f2;
 `;
 
 const StyledInput = styled.input`
   width: 100%;
   height: 50px;
+  color: #f2f2f2;
   background-color: #242424;
   border-radius: 10px;
   border: 1px solid #444444;
@@ -45,6 +50,7 @@ const StyledInput = styled.input`
 const StyledTextarea = styled.textarea`
   width: 100%;
   height: 120px;
+  color: #f2f2f2;
   background-color: #242424;
   border-radius: 10px;
   border: 1px solid #444444;
@@ -61,24 +67,73 @@ const UploadButtonContainer = styled.div`
 `;
 
 const AddExercise = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDesctiption] = useState("");
+  const navigate = useNavigate();
+  const [state, dispatch] = useReducer(uploadReducer, intialUploadState);
+  const { title, description, video, skeleton } = state;
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+  const handleChange = (type) => {
+    return (e) => dispatch({ type, payload: e.target.value });
   };
 
-  const handleDescriptionChange = (e) => {
-    setDesctiption(e.target.value);
+  const handleTagChange = ({ category, pose }) => {
+    dispatch({
+      type: "tag",
+      payload: [category, pose],
+    });
   };
+
+  async function upload() {
+    if (video === null) {
+      alert("동영상을 업로드해주세요.");
+      return;
+    }
+
+    // if (skeleton === null) {
+    //   alert("동영상의 처리가 완료될 때까지 기다려주세요.");
+    //   return;
+    // }
+
+    if (title.length < 1) {
+      alert("제목을 2자 이상 입력해주세요.");
+      return;
+    }
+
+    if (description.length < 1) {
+      alert("설명을 2자 이상 입력해주세요.");
+      return;
+    }
+
+    const dummy = {
+      error: "테스트 데이터입니다.",
+      video_length: "0",
+    };
+
+    const blob = new Blob([JSON.stringify(dummy)], {
+      type: "application/json",
+    });
+
+    const options = {
+      ...state,
+      totalFrame: parseInt(dummy.video_length),
+      skeleton: blob,
+    };
+
+    console.log(options);
+
+    const programResponse = await createVideo(options);
+    console.log(programResponse);
+
+    alert("비디오를 성공적으로 게시했습니다.");
+    navigate("/");
+  }
 
   return (
-    <div>
+    <ReducerContext.Provider value={[state, dispatch]}>
       <PageContainer>
         <AddHeader />
         <Row>
           <Column>
-            <Title>동영상 및 스켈레톤 데이터</Title>
+            <Title>동영상 및 AI 스켈레톤 데이터</Title>
             <VideoUploader />
           </Column>
           <Column>
@@ -87,24 +142,24 @@ const AddExercise = () => {
               placeholder="제목을 입력하세요..."
               maxLength={50}
               value={title}
-              onChange={handleTitleChange}
+              onChange={handleChange("title")}
             />
             <Title>운동 설명</Title>
             <StyledTextarea
               placeholder="설명을 입력하세요..."
               maxLength={200}
               value={description}
-              onChange={handleDescriptionChange}
+              onChange={handleChange("description")}
             />
             <Title>카테고리 및 태그</Title>
-            <FilterButtons all={false} />
+            <TagSelect onChange={handleTagChange} />
             <UploadButtonContainer>
-              <UploadButton />
+              <UploadButton onClick={upload} />
             </UploadButtonContainer>
           </Column>
         </Row>
       </PageContainer>
-    </div>
+    </ReducerContext.Provider>
   );
 };
 export default AddExercise;
