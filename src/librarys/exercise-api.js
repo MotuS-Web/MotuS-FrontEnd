@@ -2,7 +2,6 @@ import arms from "../assets/images/arms-up.webp";
 import knee from "../assets/images/knee.webp";
 import shoulder from "../assets/images/shoulder-up.webp";
 import thigh from "../assets/images/thigh.webp";
-
 import { getSpringAxios } from "./axios.js";
 
 const axios = getSpringAxios();
@@ -132,65 +131,38 @@ export const getCourseFromLocal = (id) => {
   return course || null;
 };
 
-// export const getCourse = async (pno, mid) => {
-//   try {
-//     const response = await fetch(
-//       `[your domain here]/program/${pno}?mid=${mid}`,
-//     );
-//     if (!response.ok) {
-//       throw new Error("Failed to fetch course data");
-//     }
-//     return await response.json();
-//   } catch (error) {
-//     console.error("API Call Error:", error);
-//     return getCourseFromLocal(pno); // API 호출에 실패한 경우 로컬에서 코스를 가져옵니다.
-//   }
-// };
-
-/* 
-
-========================
-실제 API 부분
-========================
-
-*/
-
 function toExerciseSchema(data) {
   return {
-    id: data.pno,
-    title: data.programTitle,
+    id: data.vno,
+    title: data.title,
     description: data.description,
     category: data.category,
-    posture: data.position,
-    time: data.totalPlayTime,
-    actResponseDTO: data.actResponseDTO,
-    image: images[data.pno % images.length],
+    posture: data.position,   
+    time: data.playTime,      
+    videoURL: data.videoURL,
+    thumbnailURL: data.thumbnailURL,
+    image: images[data.vno % images.length],
   };
 }
 
-export async function getPrograms(page = 1) {
-  const params = {
-    page,
-  };
-
-  const response = await axios.get("/program/list", { params });
-  response.data.dtoList = response.data.dtoList.map(toExerciseSchema);
+export async function getPrograms() {
+  const response = await axios.get("/video/list");
+  response.data.dtoList = response.data.dtoList.map(toExerciseSchema);  
   return response.data;
 }
 
-export async function searchProgramsWithName(keyword, page = 1) {
+export async function searchProgramsWithName(keyword) {
   const params = {
-    page,
     type: "t",
     keyword,
   };
 
-  const response = await axios.get("/program/list", { params });
+  const response = await axios.get("/video/list", { params });  
   response.data.dtoList = response.data.dtoList.map(toExerciseSchema);
   return response.data;
 }
 
-export async function searchProgramsWithCategory(category, position, page = 1) {
+export async function searchProgramsWithCategory(category, position) {
   const mode = [category ? "c" : "", position ? "p" : ""].join("");
 
   if (mode === "") {
@@ -202,16 +174,16 @@ export async function searchProgramsWithCategory(category, position, page = 1) {
   const params = {
     type: mode,
     keyword: [category, position].filter((item) => item !== null).join(","),
-    page,
   };
 
-  const response = await axios.get("/program/list", { params });
+  const response = await axios.get("/video/list", { params }); 
   response.data.dtoList = response.data.dtoList.map(toExerciseSchema);
   return response.data;
 }
 
+
 export async function getCourse(id, mid) {
-  const response = await axios.get(`/program/${id}/${mid}`);
+  const response = await axios.get(`/video/${id}/${mid}`);
 
   return toExerciseSchema(response.data);
 }

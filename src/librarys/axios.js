@@ -1,13 +1,13 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://10.50.228.23:8080/",
+  baseURL: "http://motus.website:8080/",
   timeout: 10000,
 });
 
 export function getSpringAxios(token) {
   const options = {
-    baseURL: "http://10.50.228.23:8080/",
+    baseURL: "http://motus.website:8080/",
     timeout: 10000,
   };
 
