@@ -30,6 +30,7 @@ const Loading = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: white;
   background-color: rgba(0, 0, 0, 0.5);
 
   &.disable {
@@ -39,13 +40,13 @@ const Loading = styled.div`
 
 const Text = styled.p`
   margin-top: 12px;
-  font-size: 12px;
+  font-size: 16px;
   text-align: center;
 `;
 
 const Icon = styled(ImSpinner2)`
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   animation: spin 5s infinite linear;
 
   @keyframes spin {
@@ -124,6 +125,17 @@ function drawPoints(context, data, ratio) {
   });
 }
 
+function getContainedSize(video) {
+  const ratio = video.videoWidth / video.videoHeight;
+  let width = video.clientHeight * ratio;
+  let height = video.clientHeight;
+  if (width > video.clientWidth) {
+    width = video.clientWidth;
+    height = video.clientWidth / ratio;
+  }
+  return [width, height];
+}
+
 const SkeletonVideo = ({ src, skeleton, onLoad, ...props }) => {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -195,17 +207,6 @@ const SkeletonVideo = ({ src, skeleton, onLoad, ...props }) => {
     }
 
     drawPoints(context, data[currentFrame], ratio);
-  }
-
-  function getContainedSize(video) {
-    const ratio = video.videoWidth / video.videoHeight;
-    let width = video.clientHeight * ratio;
-    let height = video.clientHeight;
-    if (width > video.clientWidth) {
-      width = video.clientWidth;
-      height = video.clientWidth / ratio;
-    }
-    return [width, height];
   }
 
   function getWidthAndHeight(event) {

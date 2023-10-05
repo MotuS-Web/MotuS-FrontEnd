@@ -5,7 +5,7 @@ import { MdClose, MdPlayArrow, MdRefresh } from "react-icons/md";
 import classNames from "classnames";
 
 import styled from "styled-components";
-import { DispatchContext, StateContext } from "../../librarys/context";
+import { DispatchContext, StateContext } from "../../librarys/context.jsx";
 
 import Player from "../../librarys/player.js";
 import { useNavigate } from "react-router-dom";
