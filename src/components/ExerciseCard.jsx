@@ -28,10 +28,10 @@ const CourseTitle = styled.p`
   font-weight: 500;
 `;
 
-const ExerciseCard = ({ image, title, tags, onClick }) => {
+const ExerciseCard = ({ image, title, tags, onClick, time }) => { 
   return (
     <CourseCardContainer onClick={onClick}>
-      <Thumbnail src={image} time="00:00" />
+      <Thumbnail src={image} time={time} />  
       <CourseTitle>{title}</CourseTitle>
       <Tag list={tags} />
     </CourseCardContainer>

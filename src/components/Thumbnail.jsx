@@ -24,18 +24,25 @@ const Time = styled.p`
   font-weight: 600;
 `;
 
+function formatTime(seconds) {
+  const min = Math.floor(seconds / 60);
+  const sec = seconds % 60;
+  return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+}
+
 const Thumbnail = ({ src, time }) => {
+  const formattedTime = formatTime(time);
   return (
     <Container>
       <Image src={src} />
-      <Time>{time}</Time>
+      <Time>{formattedTime}</Time>
     </Container>
   );
 };
 
 Thumbnail.propTypes = {
   src: PropTypes.string,
-  time: PropTypes.string,
+  time: PropTypes.number, 
 };
 
 export default Thumbnail;
