@@ -49,7 +49,7 @@ const Button = styled.button`
   }
 `;
 
-const FilterButtons = ({ all }) => {
+const FilterButtons = ({ all , onChange}) => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [selectedPose, setSelectedPose] = useState("전체");
 
@@ -68,6 +68,16 @@ const FilterButtons = ({ all }) => {
     "누운 자세",
   ]);
 
+   const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    onChange({ category, pose: selectedPose });
+  };
+
+  const handlePoseClick = (pose) => {
+    setSelectedPose(pose);
+    onChange({ category: selectedCategory, pose });
+  };
+
   useEffect(() => {
     if (!all) {
       setCategoryList(categoryList.filter((item) => item !== "전체"));
@@ -77,17 +87,13 @@ const FilterButtons = ({ all }) => {
 
   return (
     <Container>
-      <FilterSection>
+           <FilterSection>
         <Header>카테고리</Header>
         {categoryList.map((category) => (
           <Button
             key={category}
             selected={selectedCategory === category}
-            onClick={() => {
-              setSelectedCategory((current) =>
-                current === category ? "전체" : category,
-              );
-            }}
+            onClick={() => handleCategoryClick(category)}
           >
             {category}
           </Button>
