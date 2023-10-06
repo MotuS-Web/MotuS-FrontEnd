@@ -100,10 +100,17 @@ const Button = styled.button`
   }
 `;
 
+const VideoPlayer = styled.video`
+  width: 100%;
+  max-height: 500px;
+  border-radius: 10px;
+  outline: none;
+`;
+
 const ExerciseModal = ({
   visible,
   id,
-  video,
+  videoURL,
   title,
   description,
   tags,
@@ -114,13 +121,19 @@ const ExerciseModal = ({
   return (
     <ModalOverlay className={classNames({ visible })}>
       <ModalContainer className={classNames({ visible })}>
-        <VideoPlaceholder></VideoPlaceholder>
+        <VideoPlayer controls>
+          <source src={videoURL} type="video/mp4" />
+          브라우저는 video 태그를 지원하지 않습니다.
+        </VideoPlayer>
+
         <Title>{title}</Title>
         <Description>{description}</Description>
         <BottomContainer>
           <TagTitle># 관련 태그</TagTitle>
           <Tag style={{ flexGrow: 1 }} list={tags} />
-          <Button $isActive onClick={() => navigate("/program/" + id)}>수강하기</Button>
+          <Button $isActive onClick={() => navigate("/program/" + id)}>
+            수강하기
+          </Button>
           <Button onClick={onClose}>닫기</Button>
         </BottomContainer>
       </ModalContainer>
@@ -130,14 +143,13 @@ const ExerciseModal = ({
 
 ExerciseModal.propTypes = {
   visible: PropTypes.bool,
-  id: PropTypes.number,  
-  video: PropTypes.string,  
+  id: PropTypes.number,
+  videoURL: PropTypes.string,
   title: PropTypes.string.isRequired,
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   onClose: PropTypes.func,
 };
-
 
 ExerciseModal.defaultProps = {
   tags: [],
