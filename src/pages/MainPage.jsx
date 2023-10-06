@@ -27,60 +27,42 @@ const MainPage = () => {
   const [list, setList] = useState([]);
   const [course, setCourse] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({
+    category: "전체",
+    pose: "전체",
+  });
 
   useEffect(() => {
     async function fetchCourses() {
-      try {
-        const response = await getPrograms();
-        console.log("API 응답 결과 dtoList:", response.dtoList);
-        if (response && response.dtoList) {
-          setList(response.dtoList);
-        }
-      } catch (error) {
-        console.error("운동 목록을 불러오지 못했습니다.", error);
+      const response = await getPrograms();
+      if (response && response.dtoList) {
+        setList(response.dtoList);
       }
     }
     fetchCourses();
   }, []);
 
   function openModal(id) {
-    try {
-      const selectedCourse = list.find((course) => course.id === Number(id));
-      if (selectedCourse) {
-        const tags = [selectedCourse.category, selectedCourse.position].map(
-          convertToKoreanTag,
-        );
-        selectedCourse.tags = tags;
-        setCourse(selectedCourse);
-        setIsModalVisible(true);
-      } else {
-        console.error("선택된 강좌를 찾을 수 없습니다. id:", id);
-      }
-    } catch (error) {
-      console.error("강좌 상세 정보를 가져오는 중 오류 발생:", error);
+    const selectedCourse = list.find((course) => course.id === Number(id));
+    if (selectedCourse) {
+      const tags = [selectedCourse.category, selectedCourse.position].map(
+        convertToKoreanTag,
+      );
+      selectedCourse.tags = tags;
+      setCourse(selectedCourse);
+      setIsModalVisible(true);
     }
   }
-
-  useEffect(() => {
-    console.log("현재 course 상태:", course);
-  }, [course]);
 
   function convertToKoreanTag(tag) {
     for (const category of CATEGORY) {
       if (tag === category.key) return category.value;
     }
-
     for (const position of POSITION) {
       if (tag === position.key) return position.value;
     }
     return tag;
   }
-
- 
-  const [selectedFilters, setSelectedFilters] = useState({
-    category: "전체",
-    pose: "전체",
-  });
 
   const handleFilterChange = (filters) => {
     setSelectedFilters(filters);
@@ -93,10 +75,8 @@ const MainPage = () => {
     const matchesPose =
       selectedFilters.pose === "전체" ||
       convertToKoreanTag(courseItem.position) === selectedFilters.pose;
-
     return matchesCategory && matchesPose;
   });
-
 
   return (
     <PageContainer>
@@ -114,7 +94,7 @@ const MainPage = () => {
             {...course}
           />
         )}
-         {filteredList.map((courseItem) => {
+        {filteredList.map((courseItem) => {
           const tags = [
             convertToKoreanTag(courseItem.category),
             convertToKoreanTag(courseItem.position),
