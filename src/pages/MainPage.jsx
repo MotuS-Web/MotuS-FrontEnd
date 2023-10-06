@@ -5,6 +5,7 @@ import FilterButtons from "../components/FilterButtons";
 import ExerciseCard from "../components/ExerciseCard";
 import ExerciseModal from "../components/ExerciseModal";
 import { getPrograms } from "../librarys/exercise-api";
+import { CATEGORY, POSITION } from "../librarys/type";
 
 const PageContainer = styled.div`
   width: 1200px;
@@ -22,48 +23,91 @@ const ExerciseContainer = styled.div`
   gap: 48px 60px;
 `;
 
-
 const MainPage = () => {
   const [list, setList] = useState([]);
   const [course, setCourse] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({
+    category: "전체",
+    pose: "전체",
+  });
 
   useEffect(() => {
     async function fetchCourses() {
-      try {
-        const response = await getPrograms(); 
-        if (response && response.dtoList) {
-          setList(response.dtoList);
-        }
-      } catch (error) {
-        console.error('운동 목록을 불러오지 못했습니다.', error);
+      const response = await getPrograms();
+      if (response && response.dtoList) {
+        setList(response.dtoList);
       }
     }
-  
     fetchCourses();
   }, []);
-  
 
   function openModal(id) {
-    setCourse(list.filter((item) => item.id === id)[0]);
+    const selectedCourse = list.find((course) => course.id === Number(id));
+    if (selectedCourse) {
+      const tags = [selectedCourse.category, selectedCourse.position].map(
+        convertToKoreanTag,
+      );
+      selectedCourse.tags = tags;
+      setCourse(selectedCourse);
+      setIsModalVisible(true);
+    }
   }
+
+  function convertToKoreanTag(tag) {
+    for (const category of CATEGORY) {
+      if (tag === category.key) return category.value;
+    }
+    for (const position of POSITION) {
+      if (tag === position.key) return position.value;
+    }
+    return tag;
+  }
+
+  const handleFilterChange = (filters) => {
+    setSelectedFilters(filters);
+  };
+
+  const filteredList = list.filter((courseItem) => {
+    const matchesCategory =
+      selectedFilters.category === "전체" ||
+      convertToKoreanTag(courseItem.category) === selectedFilters.category;
+    const matchesPose =
+      selectedFilters.pose === "전체" ||
+      convertToKoreanTag(courseItem.position) === selectedFilters.pose;
+    return matchesCategory && matchesPose;
+  });
 
   return (
     <PageContainer>
       <Header />
-      <FilterButtons />
+      <FilterButtons onChange={handleFilterChange} />
       <ExerciseContainer>
-        <ExerciseModal
-          visible={course}
-          onClose={() => setCourse(null)}
-          {...course}
-        />
-        {list.map((course) => (
-          <ExerciseCard
+        {course && (
+          <ExerciseModal
             key={course.id}
-            onClick={() => openModal(course.id)}
+            visible={isModalVisible}
+            onClose={() => {
+              setIsModalVisible(false);
+              setCourse(null);
+            }}
             {...course}
           />
-        ))}
+        )}
+        {filteredList.map((courseItem) => {
+          const tags = [
+            convertToKoreanTag(courseItem.category),
+            convertToKoreanTag(courseItem.position),
+          ];
+          return (
+            <ExerciseCard
+              key={courseItem.id}
+              onClick={() => openModal(courseItem.id)}
+              tags={tags}
+              {...courseItem}
+            />
+          );
+        })}
       </ExerciseContainer>
     </PageContainer>
   );

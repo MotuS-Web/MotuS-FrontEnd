@@ -137,7 +137,7 @@ function toExerciseSchema(data) {
     title: data.title,
     description: data.description,
     category: data.category,
-    posture: data.position,   
+    position: data.position,   
     time: data.playTime,      
     videoURL: data.videoURL,
     thumbnailURL: data.thumbnailURL,
@@ -186,4 +186,14 @@ export async function getCourse(id, mid) {
   const response = await axios.get(`/video/${id}/${mid}`);
 
   return toExerciseSchema(response.data);
+}
+
+export async function getProgramDetail(id) {
+  try {
+    const response = await fetch(`http://motus.website/video/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("API 호출 중 오류 발생:", error);
+  }
 }

@@ -24,7 +24,7 @@ const Container = styled.div`
   gap: 8px;
 `;
 
-const Tag = ({ list, ...props }) => {
+const Tag = ({ list = [], ...props }) => {
   return (
     <Container {...props}>
       {list.map((item, index) => (
@@ -33,6 +33,7 @@ const Tag = ({ list, ...props }) => {
     </Container>
   );
 };
+
 
 Tag.propTypes = {
   list: PropTypes.arrayOf(PropTypes.string),

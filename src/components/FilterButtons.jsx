@@ -49,7 +49,7 @@ const Button = styled.button`
   }
 `;
 
-const FilterButtons = ({ all }) => {
+const FilterButtons = ({ all , onChange}) => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [selectedPose, setSelectedPose] = useState("전체");
 
@@ -63,10 +63,20 @@ const FilterButtons = ({ all }) => {
 
   const [poseList, setPoseList] = useState([
     "전체",
-    "선 자세",
-    "앉은 자세",
-    "누운 자세",
+    "선",
+    "앉은",
+    "누운",
   ]);
+
+   const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    onChange({ category, pose: selectedPose });
+  };
+
+  const handlePoseClick = (pose) => {
+    setSelectedPose(pose);
+    onChange({ category: selectedCategory, pose });
+  };
 
   useEffect(() => {
     if (!all) {
@@ -77,17 +87,13 @@ const FilterButtons = ({ all }) => {
 
   return (
     <Container>
-      <FilterSection>
+           <FilterSection>
         <Header>카테고리</Header>
         {categoryList.map((category) => (
           <Button
             key={category}
             selected={selectedCategory === category}
-            onClick={() => {
-              setSelectedCategory((current) =>
-                current === category ? "전체" : category,
-              );
-            }}
+            onClick={() => handleCategoryClick(category)}
           >
             {category}
           </Button>
@@ -100,9 +106,7 @@ const FilterButtons = ({ all }) => {
           <Button
             key={pose}
             selected={selectedPose === pose}
-            onClick={() => {
-              setSelectedPose((current) => (current === pose ? "전체" : pose));
-            }}
+            onClick={() => handlePoseClick(pose)} 
           >
             {pose}
           </Button>

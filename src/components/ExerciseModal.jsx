@@ -84,8 +84,8 @@ const TagTitle = styled.span`
 
 const Button = styled.button`
   padding: 10px 24px;
-  background-color: ${(props) => (props.type ? "#6968CC" : "#f2f2f2")};
-  color: ${(props) => (props.type ? "#f2f2f2" : "#242424")};
+  background-color: ${(props) => (props.$isActive ? "#6968CC" : "#f2f2f2")};
+  color: ${(props) => (props.$isActive ? "#f2f2f2" : "#242424")};
   border-radius: 10px;
   font-size: 16px;
   border: none;
@@ -100,26 +100,38 @@ const Button = styled.button`
   }
 `;
 
+const VideoPlayer = styled.video`
+  width: 100%;
+  max-height: 500px;
+  border-radius: 10px;
+  outline: none;
+`;
+
 const ExerciseModal = ({
   visible,
   id,
-  video,
+  videoURL,
   title,
   description,
   tags,
   onClose,
 }) => {
   const navigate = useNavigate();
+  console.log("태그 정보:", tags);
   return (
     <ModalOverlay className={classNames({ visible })}>
       <ModalContainer className={classNames({ visible })}>
-        <VideoPlaceholder></VideoPlaceholder>
+        <VideoPlayer controls>
+          <source src={videoURL} type="video/mp4" />
+          브라우저는 video 태그를 지원하지 않습니다.
+        </VideoPlayer>
+
         <Title>{title}</Title>
         <Description>{description}</Description>
         <BottomContainer>
           <TagTitle># 관련 태그</TagTitle>
           <Tag style={{ flexGrow: 1 }} list={tags} />
-          <Button type={true} onClick={() => navigate("/program/" + id)}>
+          <Button $isActive onClick={() => navigate("/program/" + id)}>
             수강하기
           </Button>
           <Button onClick={onClose}>닫기</Button>
@@ -131,8 +143,9 @@ const ExerciseModal = ({
 
 ExerciseModal.propTypes = {
   visible: PropTypes.bool,
-  video: PropTypes.string,
-  title: PropTypes.string,
+  id: PropTypes.number,
+  videoURL: PropTypes.string,
+  title: PropTypes.string.isRequired,
   description: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   onClose: PropTypes.func,
