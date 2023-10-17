@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import FilterButtons from "../components/FilterButtons";
 import ExerciseCard from "../components/ExerciseCard";
 import ExerciseModal from "../components/ExerciseModal";
-import { getPrograms } from "../librarys/exercise-api";
+import { getPrograms, searchPrograms , convertToEnglishTag } from "../librarys/exercise-api";
 import { CATEGORY, POSITION } from "../librarys/type";
 
 const PageContainer = styled.div`
@@ -31,6 +31,19 @@ const MainPage = () => {
     category: "전체",
     pose: "전체",
   });
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = async (term) => {
+    setSearchTerm(term);
+    
+    const englishCategory = convertToEnglishTag(selectedFilters.category, CATEGORY);
+    const englishPose = convertToEnglishTag(selectedFilters.pose, POSITION);
+    
+    const response = await searchPrograms(term, englishCategory, englishPose);
+    if (response && response.dtoList) {
+      setList(response.dtoList);
+    }
+  };
 
   useEffect(() => {
     async function fetchCourses() {
@@ -64,8 +77,16 @@ const MainPage = () => {
     return tag;
   }
 
-  const handleFilterChange = (filters) => {
+  const handleFilterChange = async (filters) => {
     setSelectedFilters(filters);
+    
+    const englishCategory = convertToEnglishTag(filters.category, CATEGORY);
+    const englishPose = convertToEnglishTag(filters.pose, POSITION);
+    
+    const response = await searchPrograms(searchTerm, englishCategory, englishPose);
+    if (response && response.dtoList) {
+      setList(response.dtoList);
+    }
   };
 
   const filteredList = list.filter((courseItem) => {
@@ -75,12 +96,15 @@ const MainPage = () => {
     const matchesPose =
       selectedFilters.pose === "전체" ||
       convertToKoreanTag(courseItem.position) === selectedFilters.pose;
-    return matchesCategory && matchesPose;
+    const matchesSearchTerm = !searchTerm || courseItem.name.includes(searchTerm); 
+    return matchesCategory && matchesPose && matchesSearchTerm;
   });
+  
+  
 
   return (
     <PageContainer>
-      <Header />
+      <Header onSearch={handleSearch} /> 
       <FilterButtons onChange={handleFilterChange} />
       <ExerciseContainer>
         {course && (

@@ -3,6 +3,8 @@ import knee from "../assets/images/knee.webp";
 import shoulder from "../assets/images/shoulder-up.webp";
 import thigh from "../assets/images/thigh.webp";
 import { getSpringAxios } from "./axios.js";
+import { CATEGORY, POSITION } from '../librarys/type'
+
 
 const axios = getSpringAxios();
 
@@ -137,8 +139,8 @@ function toExerciseSchema(data) {
     title: data.title,
     description: data.description,
     category: data.category,
-    position: data.position,   
-    time: data.playTime,      
+    position: data.position,
+    time: data.playTime,
     videoURL: data.videoURL,
     thumbnailURL: data.thumbnailURL,
     image: images[data.vno % images.length],
@@ -147,36 +149,25 @@ function toExerciseSchema(data) {
 
 export async function getPrograms() {
   const response = await axios.get("/video/list");
-  response.data.dtoList = response.data.dtoList.map(toExerciseSchema);  
-  return response.data;
-}
-
-export async function searchProgramsWithName(keyword) {
-  const params = {
-    type: "t",
-    keyword,
-  };
-
-  const response = await axios.get("/video/list", { params });  
   response.data.dtoList = response.data.dtoList.map(toExerciseSchema);
   return response.data;
 }
 
-export async function searchProgramsWithCategory(category, position) {
-  const mode = [category ? "c" : "", position ? "p" : ""].join("");
+export function convertToEnglishTag(tagValue, typeArray) {
+  const matchedType = typeArray.find(type => type.value === tagValue);
+  return matchedType ? matchedType.key : undefined;
+}
 
-  if (mode === "") {
-    throw new Error(
-      "[searchProgramsWithCategory] category와 position은 모두 비어있을 수 없습니다.",
-    );
-  }
+export async function searchPrograms(title, category, position) {
+  console.log(title, category, position);
 
   const params = {
-    type: mode,
-    keyword: [category, position].filter((item) => item !== null).join(","),
+    title: title ? title : undefined,
+    category,
+    position,
   };
 
-  const response = await axios.get("/video/list", { params }); 
+  const response = await axios.get("/video/list", { params });
   response.data.dtoList = response.data.dtoList.map(toExerciseSchema);
   return response.data;
 }
