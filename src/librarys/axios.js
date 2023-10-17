@@ -1,14 +1,16 @@
 import axios from "axios";
+const SPRING_URL = import.meta.env.VITE_SPRING_URL;
+const AI_URL = import.meta.env.VITE_AI_URL;
 
 export default axios.create({
-  baseURL: "http://motus.website/",
+  baseURL: SPRING_URL,
   timeout: 10000,
 });
 
 export function getSpringAxios(token = null) {
   const options = {
-    baseURL: "http://motus.website/",
-    timeout: 10000,
+    baseURL: SPRING_URL,
+    timeout: 1000 * 10,
   };
 
   if (token) {
@@ -22,7 +24,7 @@ export function getSpringAxios(token = null) {
 
 export function getAIAxios() {
   return axios.create({
-    baseURL: "http://10.50.228.23:8000/",
+    baseURL: AI_URL,
     timeout: 1000 * 60 * 60 * 24,
   });
 }
@@ -35,13 +37,33 @@ export async function createVideo(options) {
   data.append("description", options.description);
   data.append("category", options.category);
   data.append("position", options.pose);
-  data.append("frame", options.totalFrame);
-  data.append("playTime", options.duration);
+  data.append("frame", options.totalFrame || 90);
+  data.append("playTime", 3.4 || options.duration);
   data.append("files[0]", options.video);
   data.append("files[1]", options.skeleton);
 
+  for (const [key, value] of data.entries()) {
+    console.log(key, ":", value);
+  }
+
+  console.log(options.video);
+  console.log(options.skeleton);
+
   const response = await axios.post("/video/create", data);
   return response.data;
+}
+
+function toVideoSchema(data) {
+  return {
+    id: data.vno,
+    title: data.title,
+    description: data.description,
+    category: data.category,
+    position: data.position,
+    time: data.playTime,
+    videoURL: data.videoURL,
+    thumbnailURL: data.thumbnailURL,
+  };
 }
 
 export async function removeVideo(id) {
@@ -55,12 +77,42 @@ export async function listVideo() {
   const axios = getSpringAxios();
 
   const response = await axios.get("/video/list");
+
+  if (response.data.dtoList !== null) {
+    response.data.dtoList = response.data.dtoList.map(toVideoSchema);
+  } else {
+    response.data.dtoList = [];
+  }
+
   return response.data;
+}
+
+function toProgramSchema(data) {
+  return {
+    id: data.vno,
+    title: data.title,
+    description: data.description,
+    url: data.videoURL,
+  };
 }
 
 export async function getVideo(id) {
   const axios = getSpringAxios();
 
   const response = await axios.get("/video/" + id);
+  return toProgramSchema(response.data);
+}
+
+export async function getSkeletons(formData) {
+  const axios = getAIAxios();
+
+  const response = await axios.post("/videoRegister", formData);
+  return response.data;
+}
+
+export async function getMetrics(formData) {
+  const axios = getAIAxios();
+
+  const response = await axios.post("/getMetricsConsumer", formData);
   return response.data;
 }

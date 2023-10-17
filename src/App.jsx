@@ -8,8 +8,6 @@ import PlayerPage from "./pages/PlayerPage.jsx";
 import store from "./redux/store.js";
 import "./App.scss";
 
-const PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
-
 const Container = styled.div`
   background-color: transparent;
   height: 100%;
@@ -28,7 +26,7 @@ function App() {
     <Provider store={store}>
       <ModalProvider>
         <Container>
-          <Router basename={PUBLIC_URL}>
+          <Router>
             <Routes>{routeList}</Routes>
           </Router>
         </Container>
