@@ -15,8 +15,8 @@ import ResultModal from "../components/player/ResultModal.jsx";
 import { intialPlayerState, playerReducer } from "../reducer/player.js";
 import { useDispatch } from "react-redux";
 import { show } from "../redux/modalSlice.js";
-import { getVideo } from "../librarys/video-api.js";
 import BorderBox from "../components/player/BorderBox.jsx";
+import { getVideo } from "../librarys/axios.js";
 
 const Container = styled.div`
   width: 100%;

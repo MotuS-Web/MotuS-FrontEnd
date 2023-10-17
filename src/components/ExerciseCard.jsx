@@ -28,10 +28,10 @@ const CourseTitle = styled.p`
   font-weight: 500;
 `;
 
-const ExerciseCard = ({ id, image, title, tags, onClick, time }) => {
+const ExerciseCard = ({ id, thumbnailURL, title, tags, onClick, time }) => {
   return (
     <CourseCardContainer onClick={() => onClick(id)}>
-      <Thumbnail src={image} time={time} />
+      <Thumbnail src={thumbnailURL} time={time} />
       <CourseTitle>{title}</CourseTitle>
       <Tag list={tags} />
     </CourseCardContainer>
@@ -40,7 +40,7 @@ const ExerciseCard = ({ id, image, title, tags, onClick, time }) => {
 
 ExerciseCard.propTypes = {
   id: PropTypes.number.isRequired,
-  image: PropTypes.string,
+  thumbnailURL: PropTypes.string,
   title: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
   onClick: PropTypes.func,

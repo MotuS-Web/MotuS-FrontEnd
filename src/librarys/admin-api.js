@@ -2,13 +2,6 @@ import { getSpringAxios } from "./axios.js";
 
 const axios = getSpringAxios();
 
-/* 
-
-TODO
-body에 담을 매개변수를 object로 한번에 받는 형식으로 변경
-
-*/
-
 export async function createProgram(
   token,
   mid,

@@ -1,13 +1,14 @@
 import AddHeader from "../components/AddHeader.jsx";
 import VideoUploader from "../components/VideoUploader.jsx";
 import styled from "styled-components";
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import UploadButton from "../components/UploadButton.jsx";
 import TagSelect from "../components/TagSelect.jsx";
 import { createVideo } from "../librarys/axios.js";
 import { useNavigate } from "react-router-dom";
 import { intialUploadState, uploadReducer } from "../reducer/upload.js";
 import { ReducerContext } from "../librarys/context.js";
+import jsondata from "../librarys/data.js";
 
 const PageContainer = styled.div`
   width: 1200px;
@@ -69,7 +70,7 @@ const UploadButtonContainer = styled.div`
 const AddExercise = () => {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(uploadReducer, intialUploadState);
-  const { title, description, video, skeleton } = state;
+  const { title, description, video } = state;
 
   const handleChange = (type) => {
     return (e) => dispatch({ type, payload: e.target.value });
@@ -108,17 +109,17 @@ const AddExercise = () => {
       video_length: "0",
     };
 
-    const blob = new Blob([JSON.stringify(dummy)], {
+    const blob = new Blob([JSON.stringify(jsondata)], {
       type: "application/json",
     });
 
     const options = {
       ...state,
-      totalFrame: parseInt(dummy.video_length),
+      totalFrame: parseInt(jsondata.video_length),
       skeleton: blob,
     };
 
-    console.log(options);
+    console.log([JSON.stringify(jsondata)]);
 
     const programResponse = await createVideo(options);
     console.log(programResponse);
@@ -151,7 +152,7 @@ const AddExercise = () => {
               value={description}
               onChange={handleChange("description")}
             />
-            <Title>카테고리 및 태그</Title>
+            <Title>태그</Title>
             <TagSelect onChange={handleTagChange} />
             <UploadButtonContainer>
               <UploadButton onClick={upload} />
