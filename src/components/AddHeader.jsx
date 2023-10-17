@@ -12,7 +12,10 @@ const HeaderContainer = styled.div`
   gap: 16px;
 `;
 
-const Logo = styled.img``;
+const Logo = styled.img`
+  height: 60px;
+  object-fit: contain;
+`;
 
 const Title = styled.h2`
   font-size: 36px;

@@ -5,12 +5,13 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  background-color: #292929;
 `;
 
 const Image = styled.img`
   height: 240px;
   width: 360px;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const Time = styled.p`
@@ -25,12 +26,11 @@ const Time = styled.p`
 `;
 
 function formatTime(seconds) {
-  const totalSeconds = Math.floor(seconds); 
+  const totalSeconds = Math.floor(seconds);
   const min = Math.floor(totalSeconds / 60);
   const sec = totalSeconds % 60;
-  return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+  return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 }
-
 
 const Thumbnail = ({ src, time }) => {
   const formattedTime = formatTime(time);
@@ -44,7 +44,7 @@ const Thumbnail = ({ src, time }) => {
 
 Thumbnail.propTypes = {
   src: PropTypes.string,
-  time: PropTypes.number, 
+  time: PropTypes.number,
 };
 
 export default Thumbnail;
