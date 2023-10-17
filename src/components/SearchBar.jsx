@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Iconsearch from "../assets/icons/iconsearch.png";
+import PropTypes from 'prop-types';
 
 const SearchContainer = styled.div`
   padding: 14px 16px;
@@ -34,13 +35,24 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
+  const handleInputChange = (e) => {
+    onSearch(e.target.value);
+  };
+
   return (
     <SearchContainer>
       <SearchIcon src={Iconsearch} alt="Search" />
-      <SearchInput placeholder="원하는 운동을 검색해보세요!" />
+      <SearchInput
+        placeholder="원하는 운동을 검색해보세요!"
+        onChange={handleInputChange}
+      />
     </SearchContainer>
   );
+};
+
+SearchBar.propTypes = {
+  onSearch: PropTypes.func.isRequired
 };
 
 export default SearchBar;

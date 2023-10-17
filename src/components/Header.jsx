@@ -3,6 +3,7 @@ import UploadButton from "./UploadButton";
 import styled from "styled-components";
 import LogoImage from "../assets/icons/LOGO.png";
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -16,15 +17,20 @@ const HeaderContainer = styled.div`
 
 const Logo = styled.img``;
 
-const Header = () => {
+const Header = ({ onSearch }) => { 
   const navigate = useNavigate();
+
   return (
     <HeaderContainer>
       <Logo src={LogoImage} alt="Logo" />
-      <SearchBar />
+      <SearchBar onSearch={onSearch} />  
       <UploadButton onClick={() => navigate("/register")} />
     </HeaderContainer>
   );
+};
+
+Header.propTypes = {
+  onSearch: PropTypes.func.isRequired
 };
 
 export default Header;
