@@ -1,6 +1,6 @@
-import { useReducer, createContext} from 'react';
-import { modalReducer, intialModalState } from '../reducer/modal.js';
-import PropTypes from 'prop-types';
+import { useReducer, createContext } from "react";
+import { modalReducer, intialModalState } from "../reducer/modal.js";
+import PropTypes from "prop-types";
 
 export const StateContext = createContext();
 export const DispatchContext = createContext();

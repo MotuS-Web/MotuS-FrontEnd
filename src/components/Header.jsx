@@ -15,7 +15,10 @@ const HeaderContainer = styled.div`
   gap: 16px;
 `;
 
-const Logo = styled.img``;
+const Logo = styled.img`
+  height: 60px;
+  object-fit: contain;
+`;
 
 const Header = ({ onSearch }) => { 
   const navigate = useNavigate();

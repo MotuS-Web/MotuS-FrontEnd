@@ -49,7 +49,7 @@ const Button = styled.button`
   }
 `;
 
-const FilterButtons = ({ all , onChange}) => {
+const FilterButtons = ({ all, onChange }) => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [selectedPose, setSelectedPose] = useState("전체");
 
@@ -61,14 +61,9 @@ const FilterButtons = ({ all , onChange}) => {
     "허벅지",
   ]);
 
-  const [poseList, setPoseList] = useState([
-    "전체",
-    "선",
-    "앉은",
-    "누운",
-  ]);
+  const [poseList, setPoseList] = useState(["전체", "선", "앉은", "누운"]);
 
-   const handleCategoryClick = (category) => {
+  const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     onChange({ category, pose: selectedPose });
   };
@@ -87,7 +82,7 @@ const FilterButtons = ({ all , onChange}) => {
 
   return (
     <Container>
-           <FilterSection>
+      <FilterSection>
         <Header>카테고리</Header>
         {categoryList.map((category) => (
           <Button
@@ -106,9 +101,9 @@ const FilterButtons = ({ all , onChange}) => {
           <Button
             key={pose}
             selected={selectedPose === pose}
-            onClick={() => handlePoseClick(pose)} 
+            onClick={() => handlePoseClick(pose)}
           >
-            {pose}
+            {pose} {pose !== "전체" ? "자세" : ""}
           </Button>
         ))}
       </FilterSection>
@@ -118,6 +113,7 @@ const FilterButtons = ({ all , onChange}) => {
 
 FilterButtons.propTypes = {
   all: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 FilterButtons.defaultProps = {

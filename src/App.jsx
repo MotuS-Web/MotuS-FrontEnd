@@ -16,7 +16,7 @@ const Container = styled.div`
 const routeList = [
   { path: "/", element: <MainPage /> },
   { path: "/program/:id", element: <PlayerPage /> },
-  { path: "/register", element: <AddExercise />}
+  { path: "/register", element: <AddExercise /> },
 ].map((item, index) => (
   <Route key={index} path={item.path} element={item.element} />
 ));
@@ -27,9 +27,7 @@ function App() {
       <ModalProvider>
         <Container>
           <Router>
-            <Routes>
-              {routeList}
-            </Routes>
+            <Routes>{routeList}</Routes>
           </Router>
         </Container>
       </ModalProvider>
