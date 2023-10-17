@@ -8,6 +8,8 @@ import PlayerPage from "./pages/PlayerPage.jsx";
 import store from "./redux/store.js";
 import "./App.scss";
 
+const PUBLIC_URL = import.meta.env.VITE_PUBLIC_URL;
+
 const Container = styled.div`
   background-color: transparent;
   height: 100%;
@@ -16,7 +18,7 @@ const Container = styled.div`
 const routeList = [
   { path: "/", element: <MainPage /> },
   { path: "/program/:id", element: <PlayerPage /> },
-  { path: "/register", element: <AddExercise />}
+  { path: "/register", element: <AddExercise /> },
 ].map((item, index) => (
   <Route key={index} path={item.path} element={item.element} />
 ));
@@ -26,10 +28,8 @@ function App() {
     <Provider store={store}>
       <ModalProvider>
         <Container>
-          <Router>
-            <Routes>
-              {routeList}
-            </Routes>
+          <Router basename={PUBLIC_URL}>
+            <Routes>{routeList}</Routes>
           </Router>
         </Container>
       </ModalProvider>
