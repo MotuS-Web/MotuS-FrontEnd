@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Iconsearch from "../assets/icons/iconsearch.png";
+import Iconsearch from "../../assets/icons/iconsearch.png";
 import PropTypes from 'prop-types';
 
 const SearchContainer = styled.div`

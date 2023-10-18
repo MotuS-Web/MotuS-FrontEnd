@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import LogoImage from "../assets/icons/LOGO.png";
-import BackButton from "./BackButton";
+import LogoImage from "../../assets/icons/LOGO.png";
+import BackButton from "../button/BackButton";
 import SearchBar from "./SearchBar";
-import UploadButton from "./UploadButton";
+import UploadButton from "../button/UploadButton";
 import { useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 

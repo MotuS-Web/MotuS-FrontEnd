@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { CATEGORY, POSITION } from "../librarys/type";
-import { ReducerContext } from "../librarys/context.js";
+import { CATEGORY, POSITION } from "../../librarys/type";
+import { ReducerContext } from "../../librarys/context.js";
 
 const Badge = styled.span`
   padding: 4px 16px;

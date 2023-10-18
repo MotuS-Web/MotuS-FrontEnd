@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import BackIcon from "../assets/icons/Page-left.png";
+import BackIcon from "../../assets/icons/Page-left.png";
 
 const BackButtonContainer = styled.button`
   padding: 12px 24px;

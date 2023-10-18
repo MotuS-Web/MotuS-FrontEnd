@@ -1,9 +1,9 @@
-import Header from "../components/Header";
-import VideoUploader from "../components/VideoUploader.jsx";
+import Header from "../components/header/Header";
+import VideoUploader from "../components/exercise/VideoUploader.jsx";
 import styled from "styled-components";
 import { useReducer } from "react";
-import UploadButton from "../components/UploadButton.jsx";
-import Tag from "../components/Tag.jsx";
+import UploadButton from "../components/button/UploadButton.jsx";
+import Tag from "../components/exercise/Tag.jsx";
 import { createVideo } from "../librarys/axios.js";
 import { useNavigate } from "react-router-dom";
 import { intialUploadState, uploadReducer } from "../reducer/upload.js";
