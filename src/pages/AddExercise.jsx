@@ -1,9 +1,9 @@
-import Header from "../components/Header"
+import Header from "../components/Header";
 import VideoUploader from "../components/VideoUploader.jsx";
 import styled from "styled-components";
 import { useReducer } from "react";
 import UploadButton from "../components/UploadButton.jsx";
-import TagSelect from "../components/TagSelect.jsx";
+import Tag from "../components/Tag.jsx";
 import { createVideo } from "../librarys/axios.js";
 import { useNavigate } from "react-router-dom";
 import { intialUploadState, uploadReducer } from "../reducer/upload.js";
@@ -153,7 +153,7 @@ const AddExercise = () => {
               onChange={handleChange("description")}
             />
             <Title>태그</Title>
-            <TagSelect onChange={handleTagChange} />
+            <Tag selectable={true} />
             <UploadButtonContainer>
               <UploadButton onClick={upload} />
             </UploadButtonContainer>
