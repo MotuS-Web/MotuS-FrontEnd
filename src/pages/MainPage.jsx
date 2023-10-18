@@ -104,7 +104,7 @@ const MainPage = () => {
 
   return (
     <PageContainer>
-      <Header onSearch={handleSearch} /> 
+      <Header onSearch={handleSearch} />
       <FilterButtons onChange={handleFilterChange} />
       <ExerciseContainer>
         {course && (

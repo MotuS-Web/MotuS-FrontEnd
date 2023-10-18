@@ -1,4 +1,4 @@
-import AddHeader from "../components/AddHeader.jsx";
+import Header from "../components/Header"
 import VideoUploader from "../components/VideoUploader.jsx";
 import styled from "styled-components";
 import { useReducer } from "react";
@@ -131,7 +131,7 @@ const AddExercise = () => {
   return (
     <ReducerContext.Provider value={[state, dispatch]}>
       <PageContainer>
-        <AddHeader />
+        <Header isAddHeader={true} />
         <Row>
           <Column>
             <Title>동영상 및 AI 스켈레톤 데이터</Title>
