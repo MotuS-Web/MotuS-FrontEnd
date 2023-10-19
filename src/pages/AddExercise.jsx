@@ -70,7 +70,7 @@ const UploadButtonContainer = styled.div`
 const AddExercise = () => {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(uploadReducer, intialUploadState);
-  const { title, description, video } = state;
+  const { title, description, video, skeleton } = state;
 
   const handleChange = (type) => {
     return (e) => dispatch({ type, payload: e.target.value });
@@ -104,22 +104,17 @@ const AddExercise = () => {
       return;
     }
 
-    const dummy = {
-      error: "테스트 데이터입니다.",
-      video_length: "0",
-    };
-
-    const blob = new Blob([JSON.stringify(jsondata)], {
+    const blob = new Blob([JSON.stringify(skeleton)], {
       type: "application/json",
     });
 
     const options = {
       ...state,
-      totalFrame: parseInt(jsondata.video_length),
+      totalFrame: parseInt(skeleton.video_length),
       skeleton: blob,
     };
 
-    console.log([JSON.stringify(jsondata)]);
+    console.log([JSON.stringify(skeleton)]);
 
     const programResponse = await createVideo(options);
     console.log(programResponse);
