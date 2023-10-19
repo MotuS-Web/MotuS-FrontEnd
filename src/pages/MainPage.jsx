@@ -45,7 +45,21 @@ const MainPage = () => {
 
   const handlePageChange = async (pageNumber) => {
     setCurrentPage(pageNumber);
-    const response = await getPrograms(pageNumber, ITEMS_PER_PAGE);
+
+    const englishCategory = convertToEnglishTag(
+      selectedFilters.category,
+      CATEGORY,
+    );
+    const englishPose = convertToEnglishTag(selectedFilters.pose, POSITION);
+
+    const response = await searchPrograms(
+      null,
+      englishCategory,
+      englishPose,
+      pageNumber,
+      ITEMS_PER_PAGE,
+    );
+
     if (response && response.dtoList) {
       setList(response.dtoList);
     }
@@ -92,7 +106,7 @@ const MainPage = () => {
       console.log("API totalCount:", response.total);
     }
     fetchCourses();
-  }, [currentPage]);
+  }, []);
   
 
   function openModal(id) {
@@ -118,20 +132,24 @@ const MainPage = () => {
   }
 
   const handleFilterChange = async (filters) => {
+    setCurrentPage(1);
     setSelectedFilters(filters);
-
+  
     const englishCategory = convertToEnglishTag(filters.category, CATEGORY);
     const englishPose = convertToEnglishTag(filters.pose, POSITION);
-
+  
     const response = await searchPrograms(
       searchTerm,
       englishCategory,
       englishPose,
-      currentPage,
+      1,
       ITEMS_PER_PAGE,
     );
     if (response && response.dtoList) {
       setList(response.dtoList);
+    }
+    if (response && response.total) { 
+      setTotalItems(response.total);
     }
   };
 
@@ -146,12 +164,11 @@ const MainPage = () => {
       !searchTerm || courseItem.name.includes(searchTerm);
     return matchesCategory && matchesPose && matchesSearchTerm;
   });
-  console.log(totalItems);
-  console.log("totalItems:", totalItems, "ITEMS_PER_PAGE:", ITEMS_PER_PAGE);
+  
   return (
     <PageContainer>
       <Header onSearch={handleSearch} />
-      <FilterButtons onChange={handleFilterChange} />
+      <FilterButtons all onChange={handleFilterChange} />
       <ExerciseContainer>
         {course && (
           <ExerciseModal
@@ -164,20 +181,20 @@ const MainPage = () => {
             {...course}
           />
         )}
-        {list.map((courseItem) => {
-          const tags = [
-            convertToKoreanTag(courseItem.category),
-            convertToKoreanTag(courseItem.position),
-          ];
-          return (
-            <ExerciseCard
-              key={courseItem.id}
-              onClick={() => openModal(courseItem.id)}
-              tags={tags}
-              {...courseItem}
-            />
-          );
-        })}
+      {filteredList.map((courseItem) => {
+        const tags = [
+          convertToKoreanTag(courseItem.category),
+          convertToKoreanTag(courseItem.position),
+        ];
+        return (
+          <ExerciseCard
+            key={courseItem.id}
+            onClick={() => openModal(courseItem.id)}
+            tags={tags}
+            {...courseItem}
+          />
+        );
+      })}
       </ExerciseContainer>
       <Pagination
         totalItems={totalItems}

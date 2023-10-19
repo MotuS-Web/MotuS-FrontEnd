@@ -58,8 +58,8 @@ function Pagination({ totalItems, itemsPerPage, onChange, currentPage }) {
       onChange(selected);
     }
   };
-
-  const pageCount = Math.ceil(totalItems / itemsPerPage);
+  console.log(totalItems, itemsPerPage);
+  const pageCount = Math.floor(totalItems / itemsPerPage) +  1;
 
   return (
     <PaginateContainer>
