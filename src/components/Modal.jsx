@@ -7,8 +7,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 const Background = styled.div`
   top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
+  padding: 48px 0;
   z-index: 99;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
@@ -32,6 +34,7 @@ const Background = styled.div`
 const Content = styled.div`
   max-width: 400px;
   width: 100%;
+  margin: auto;
   border-radius: 6px;
   background-color: #242424;
   color: #f2f2f2;

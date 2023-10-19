@@ -9,7 +9,7 @@
 | <img width="150px" src="https://avatars.githubusercontent.com/u/53892427?v=4" /> | <img width="150px" src="https://avatars.githubusercontent.com/u/35104213?v=4" /> |
 |                                    한림대학교                                    |                                    한림대학교                                    |
 |                                빅데이터전공 4학년                                |                                빅데이터전공 2학년                                |
-|                  [@osohyun0224](https://github.com/osohyun0224)                  |                   [@PortalCube](https://github.com/PortalCube)                   | <br/> |
+|                  [@osohyun0224](https://github.com/osohyun0224)                  |                   [@PortalCube](https://github.com/PortalCube)                   |
 
 ## 🧑🏻‍💻 Development Setup
 
@@ -35,7 +35,7 @@ npm start build
 npm run dev
 ```
 
-Production의 경우, HTTPS 환경으로 배포하여야 합니다. VITE_PUBLIC_URL 환경변수를 수정하여 PUBLIC_URL을 설정할 수 있습니다.
+Production의 경우, HTTPS 환경으로 배포하여야 합니다.
 
 ## 📚 Frontend Libraries
 

@@ -30,19 +30,13 @@ const Box = styled.div`
 
 const BorderBox = () => {
   const { blackBox } = useContext(StateContext);
-  return (
-    <Container className={blackBox ? null : "disable"}>
-      <Box />
-      <Box />
-      <Box />
-      <Box />
-      <Box className="disable" />
-      <Box />
-      <Box />
-      <Box />
-      <Box />
-    </Container>
-  );
+  const boxes = Array(9)
+    .fill(null)
+    .map((_, index) => (
+      <Box key={index} className={index === 4 ? "disable" : null} />
+    ));
+  console.log(boxes);
+  return <Container className={blackBox ? null : "disable"}>{boxes}</Container>;
 };
 
 export default BorderBox;
