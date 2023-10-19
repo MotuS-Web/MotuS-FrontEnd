@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { intialUploadState, uploadReducer } from "../reducer/upload.js";
 import { ReducerContext } from "../librarys/context.js";
 import jsondata from "../librarys/data.js";
+import UploadHeader from "../components/header/UploadHeader";
 
 const PageContainer = styled.div`
   width: 1200px;
@@ -126,7 +127,7 @@ const AddExercise = () => {
   return (
     <ReducerContext.Provider value={[state, dispatch]}>
       <PageContainer>
-        <AddHeader />
+        <UploadHeader />
         <Row>
           <Column>
             <Title>동영상 및 AI 스켈레톤 데이터</Title>

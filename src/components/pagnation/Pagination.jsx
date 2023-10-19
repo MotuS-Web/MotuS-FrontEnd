@@ -1,22 +1,22 @@
-import PropTypes from 'prop-types';
-import ReactPaginate from 'react-paginate';
-import styled from 'styled-components';
-import leftArrow from '../../assets/icons/Page-left.png';
-import rightArrow from '../../assets/icons/Page-right.png';
+import PropTypes from "prop-types";
+import ReactPaginate from "react-paginate";
+import styled from "styled-components";
+import leftArrow from "../../assets/icons/Page-left.png";
+import rightArrow from "../../assets/icons/Page-right.png";
 
 const PaginateContainer = styled.div`
-  z-index: 1000;
+  margin-top: 64px;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   padding: 10px 0;
   list-style: none;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const PageLink = styled.div`
   background-color: white;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 
 const Arrow = styled.img`
@@ -30,13 +30,13 @@ const PageNumber = styled.div`
   border-radius: 5px;
   border: 1px solid #5c859b;
   cursor: pointer;
-  font-family: 'Nanum Gothic';
+  font-family: "Nanum Gothic";
   font-size: 13px;
   font-weight: 700;
   line-height: 19px;
   letter-spacing: -0.02em;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
 
   &:hover {
     background-color: #5c859b55;
@@ -44,13 +44,11 @@ const PageNumber = styled.div`
 `;
 
 const ActiveNumber = styled(PageNumber)`
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #5c859b55;
 `;
 
-
 function Pagination({ totalItems, itemsPerPage, onChange, currentPage }) {
-  
   const handlePageClick = (data) => {
     let selected = data.selected + 1;
 
@@ -59,7 +57,7 @@ function Pagination({ totalItems, itemsPerPage, onChange, currentPage }) {
     }
   };
   console.log(totalItems, itemsPerPage);
-  const pageCount = Math.floor(totalItems / itemsPerPage) +  1;
+  const pageCount = Math.floor(totalItems / itemsPerPage) + 1;
 
   return (
     <PaginateContainer>
@@ -89,7 +87,7 @@ Pagination.propTypes = {
   totalItems: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   onChange: PropTypes.func,
-  currentPage: PropTypes.number.isRequired, 
+  currentPage: PropTypes.number.isRequired,
 };
 
 export default Pagination;

@@ -197,7 +197,7 @@ const MainPage = () => {
         {filteredList.map((courseItem) => {
           const tags = [
             convertToKoreanTag(courseItem.category),
-            convertToKoreanTag(courseItem.position),
+            convertToKoreanTag(courseItem.position) + " 자세",
           ];
           return (
             <ExerciseCard
