@@ -4,39 +4,46 @@ import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 import leftArrow from '../../assets/icons/Page-left.png';
 import rightArrow from '../../assets/icons/Page-right.png';
-import './Pagination.css';
 
-const StyledPaginateContainer = styled.div`
+const PaginateContainer = styled.div`
+  z-index: 1000;
   display: flex;
   justify-content: center;
+  align-items: center;  // Ensure items are vertically centered
   padding: 10px 0;
+  list-style: none;
 `;
-const StyledArrow = styled.img`
+
+const Page = styled.div`
+  margin: 0 3px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #5c859b;
+  cursor: pointer;
+  font-family: 'Nanum Gothic';
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: -0.02em;
+  text-align: center;
+
+  &:hover {
+    background-color: #5c859b55;
+  }
+`;
+
+const PageLink = styled.div`
+  background-color: white;
+`;
+
+const ActiveLink = styled.div`
+  color: #D94A56;
+`;
+
+const Arrow = styled.img`
   height: 12px;
   vertical-align: middle;
 `;
-
-const StyledReactPaginate = styled(ReactPaginate)`
-  display: flex;
-  justify-content: center;
-  list-style: none; 
-  .page-link {
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 19px;
-    letter-spacing: -0.02em;
-    text-align: center;
-    color: black;
-    margin: 0 3px;
-    padding: 5px 10px;
-  }
-  .active-link {
-    color: #00418E;
-    font-weight:bold;
-  }
-`;
-
 
 function Pagination({ totalItems, itemsPerPage, onChange }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -50,13 +57,15 @@ function Pagination({ totalItems, itemsPerPage, onChange }) {
     }
   };
 
+  const pageCount = Math.ceil(totalItems / itemsPerPage);
+
   return (
-    <StyledPaginateContainer>
-      <StyledReactPaginate
-        previousLabel={<StyledArrow src={leftArrow} alt="Prev" />}
-        nextLabel={<StyledArrow src={rightArrow} alt="Next" />}
+    <PaginateContainer>
+      <ReactPaginate
+        previousLabel={<Arrow src={leftArrow} alt="Prev" />}
+        nextLabel={<Arrow src={rightArrow} alt="Next" />}
         breakLabel="..."
-        pageCount={totalItems / itemsPerPage}
+        pageCount={pageCount}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}
@@ -64,15 +73,16 @@ function Pagination({ totalItems, itemsPerPage, onChange }) {
         subContainerClassName={"pages pagination"}
         activeClassName={"active"}
         forcePage={currentPage}
-        pageClassName={"page"}
-        pageLinkClassName={"page-link"}
-        previousLinkClassName={"page-link"}
-        nextLinkClassName={"page-link"}
-        activeLinkClassName={"active-link"}
+        pageClassName={Page}
+        pageLinkClassName={PageLink}
+        previousLinkClassName={PageLink}
+        nextLinkClassName={PageLink}
+        activeLinkClassName={ActiveLink}
       />
-    </StyledPaginateContainer>
+    </PaginateContainer>
   );
 }
+
 Pagination.propTypes = {
   totalItems: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,

@@ -4,6 +4,7 @@ import Header from "../components/header/Header";
 import FilterButtons from "../components/button/FilterButtons";
 import ExerciseCard from "../components/exercise/ExerciseCard";
 import ExerciseModal from "../components/exercise/ExerciseModal";
+import Pagination from "../components/pagnation/Pagination";
 import { getPrograms, searchPrograms , convertToEnglishTag } from "../librarys/exercise-api";
 import { CATEGORY, POSITION } from "../librarys/type";
 
@@ -23,6 +24,9 @@ const ExerciseContainer = styled.div`
   gap: 48px 60px;
 `;
 
+//페이지네이션 적용을 위해
+const ITEMS_PER_PAGE = 6;
+
 const MainPage = () => {
   const [list, setList] = useState([]);
   const [course, setCourse] = useState(null);
@@ -32,6 +36,11 @@ const MainPage = () => {
     pose: "전체",
   });
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const handleSearch = async (term) => {
     setSearchTerm(term);
@@ -99,6 +108,8 @@ const MainPage = () => {
     const matchesSearchTerm = !searchTerm || courseItem.name.includes(searchTerm); 
     return matchesCategory && matchesPose && matchesSearchTerm;
   });
+
+  const displayedItems = filteredList.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
   
   
 
@@ -118,7 +129,7 @@ const MainPage = () => {
             {...course}
           />
         )}
-        {filteredList.map((courseItem) => {
+        {displayedItems.map((courseItem) => {
           const tags = [
             convertToKoreanTag(courseItem.category),
             convertToKoreanTag(courseItem.position),
@@ -133,6 +144,11 @@ const MainPage = () => {
           );
         })}
       </ExerciseContainer>
+      <Pagination
+        totalItems={filteredList.length}
+        itemsPerPage={ITEMS_PER_PAGE}
+        onChange={handlePageChange}
+      />
     </PageContainer>
   );
 };
