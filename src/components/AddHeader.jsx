@@ -15,6 +15,7 @@ const HeaderContainer = styled.div`
 const Logo = styled.img`
   height: 60px;
   object-fit: contain;
+  cursor: pointer;
 `;
 
 const Title = styled.h2`
@@ -28,7 +29,7 @@ const AddHeader = () => {
   const navigate = useNavigate();
   return (
     <HeaderContainer>
-      <Logo src={LogoImage} alt="Logo" />
+      <Logo src={LogoImage} alt="Logo" onClick={() => navigate("/")} />
       <Title>영상 게시하기</Title>
       <BackButton onClick={() => navigate("/")} />
     </HeaderContainer>
