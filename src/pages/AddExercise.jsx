@@ -3,7 +3,7 @@ import VideoUploader from "../components/exercise/VideoUploader.jsx";
 import styled from "styled-components";
 import { useReducer } from "react";
 import UploadButton from "../components/button/UploadButton.jsx";
-import Tag from "../components/exercise/Tag.jsx";
+import TagSelect from "../components/exercise/TagSelect.jsx";
 import { createVideo } from "../librarys/axios.js";
 import { useNavigate } from "react-router-dom";
 import { intialUploadState, uploadReducer } from "../reducer/upload.js";
@@ -131,7 +131,7 @@ const AddExercise = () => {
   return (
     <ReducerContext.Provider value={[state, dispatch]}>
       <PageContainer>
-        <Header isAddHeader={true} />
+        <AddHeader />
         <Row>
           <Column>
             <Title>동영상 및 AI 스켈레톤 데이터</Title>
@@ -153,7 +153,7 @@ const AddExercise = () => {
               onChange={handleChange("description")}
             />
             <Title>태그</Title>
-            <Tag selectable={true} />
+            <TagSelect onChange={handleTagChange} />
             <UploadButtonContainer>
               <UploadButton onClick={upload} />
             </UploadButtonContainer>

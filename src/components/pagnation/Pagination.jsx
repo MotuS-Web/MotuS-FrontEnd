@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
@@ -9,13 +8,24 @@ const PaginateContainer = styled.div`
   z-index: 1000;
   display: flex;
   justify-content: center;
-  align-items: center;  // Ensure items are vertically centered
+  align-items: center; 
   padding: 10px 0;
   list-style: none;
+  color: #FFFFFF;
 `;
 
-const Page = styled.div`
-  margin: 0 3px;
+const PageLink = styled.div`
+  background-color: white;
+  color: #FFFFFF;
+`;
+
+const Arrow = styled.img`
+  height: 12px;
+  vertical-align: middle;
+`;
+
+const PageNumber = styled.div`
+  display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
   border: 1px solid #5c859b;
@@ -26,31 +36,23 @@ const Page = styled.div`
   line-height: 19px;
   letter-spacing: -0.02em;
   text-align: center;
+  color: #FFFFFF;
 
   &:hover {
     background-color: #5c859b55;
   }
 `;
 
-const PageLink = styled.div`
-  background-color: white;
+const ActiveNumber = styled(PageNumber)`
+  color: #FFFFFF;
+  background-color: #5c859b55;
 `;
 
-const ActiveLink = styled.div`
-  color: #D94A56;
-`;
 
-const Arrow = styled.img`
-  height: 12px;
-  vertical-align: middle;
-`;
-
-function Pagination({ totalItems, itemsPerPage, onChange }) {
-  const [currentPage, setCurrentPage] = useState(0);
-
+function Pagination({ totalItems, itemsPerPage, onChange, currentPage }) {
+  
   const handlePageClick = (data) => {
     let selected = data.selected;
-    setCurrentPage(selected);
 
     if (onChange) {
       onChange(selected);
@@ -73,11 +75,11 @@ function Pagination({ totalItems, itemsPerPage, onChange }) {
         subContainerClassName={"pages pagination"}
         activeClassName={"active"}
         forcePage={currentPage}
-        pageClassName={Page}
+        pageClassName={PageNumber}
         pageLinkClassName={PageLink}
         previousLinkClassName={PageLink}
         nextLinkClassName={PageLink}
-        activeLinkClassName={ActiveLink}
+        activeLinkClassName={ActiveNumber}
       />
     </PaginateContainer>
   );
@@ -87,6 +89,7 @@ Pagination.propTypes = {
   totalItems: PropTypes.number.isRequired,
   itemsPerPage: PropTypes.number.isRequired,
   onChange: PropTypes.func,
+  currentPage: PropTypes.number.isRequired, 
 };
 
 export default Pagination;

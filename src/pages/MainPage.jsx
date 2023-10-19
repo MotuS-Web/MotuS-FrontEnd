@@ -5,7 +5,11 @@ import FilterButtons from "../components/button/FilterButtons";
 import ExerciseCard from "../components/exercise/ExerciseCard";
 import ExerciseModal from "../components/exercise/ExerciseModal";
 import Pagination from "../components/pagnation/Pagination";
-import { getPrograms, searchPrograms , convertToEnglishTag } from "../librarys/exercise-api";
+import {
+  getPrograms,
+  searchPrograms,
+  convertToEnglishTag,
+} from "../librarys/exercise-api";
 import { CATEGORY, POSITION } from "../librarys/type";
 
 const PageContainer = styled.div`
@@ -39,16 +43,29 @@ const MainPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+    const maxPageIndex = Math.max(
+      Math.ceil(filteredList.length / ITEMS_PER_PAGE) - 1,
+      0,
+    );
+    setCurrentPage(Math.min(pageNumber, maxPageIndex));
   };
 
   const handleSearch = async (term) => {
     setSearchTerm(term);
-    
-    const englishCategory = convertToEnglishTag(selectedFilters.category, CATEGORY);
+
+    const englishCategory = convertToEnglishTag(
+      selectedFilters.category,
+      CATEGORY,
+    );
     const englishPose = convertToEnglishTag(selectedFilters.pose, POSITION);
-    
-    const response = await searchPrograms(term, englishCategory, englishPose);
+
+    const response = await searchPrograms(
+      term,
+      englishCategory,
+      englishPose,
+      currentPage,
+      ITEMS_PER_PAGE,
+    );
     if (response && response.dtoList) {
       setList(response.dtoList);
     }
@@ -56,13 +73,13 @@ const MainPage = () => {
 
   useEffect(() => {
     async function fetchCourses() {
-      const response = await getPrograms();
+      const response = await getPrograms(currentPage, ITEMS_PER_PAGE);
       if (response && response.dtoList) {
         setList(response.dtoList);
       }
     }
     fetchCourses();
-  }, []);
+  }, [currentPage]);
 
   function openModal(id) {
     const selectedCourse = list.find((course) => course.id === Number(id));
@@ -88,11 +105,17 @@ const MainPage = () => {
 
   const handleFilterChange = async (filters) => {
     setSelectedFilters(filters);
-    
+
     const englishCategory = convertToEnglishTag(filters.category, CATEGORY);
     const englishPose = convertToEnglishTag(filters.pose, POSITION);
-    
-    const response = await searchPrograms(searchTerm, englishCategory, englishPose);
+
+    const response = await searchPrograms(
+      searchTerm,
+      englishCategory,
+      englishPose,
+      currentPage,
+      ITEMS_PER_PAGE,
+    );
     if (response && response.dtoList) {
       setList(response.dtoList);
     }
@@ -105,13 +128,10 @@ const MainPage = () => {
     const matchesPose =
       selectedFilters.pose === "전체" ||
       convertToKoreanTag(courseItem.position) === selectedFilters.pose;
-    const matchesSearchTerm = !searchTerm || courseItem.name.includes(searchTerm); 
+    const matchesSearchTerm =
+      !searchTerm || courseItem.name.includes(searchTerm);
     return matchesCategory && matchesPose && matchesSearchTerm;
   });
-
-  const displayedItems = filteredList.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE);
-  
-  
 
   return (
     <PageContainer>
@@ -129,7 +149,7 @@ const MainPage = () => {
             {...course}
           />
         )}
-        {displayedItems.map((courseItem) => {
+        {list.map((courseItem) => {
           const tags = [
             convertToKoreanTag(courseItem.category),
             convertToKoreanTag(courseItem.position),
@@ -148,6 +168,7 @@ const MainPage = () => {
         totalItems={filteredList.length}
         itemsPerPage={ITEMS_PER_PAGE}
         onChange={handlePageChange}
+        currentPage={currentPage}
       />
     </PageContainer>
   );

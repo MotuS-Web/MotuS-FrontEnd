@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import Tag from "./Tag.jsx";
+import Tag from "../../components/exercise/Tag";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
@@ -42,6 +42,12 @@ const ModalContainer = styled.div`
   &:not(.visible) {
     transform: scale(0.9);
   }
+`;
+
+const VideoPlaceholder = styled.div`
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background-color: #5f5f5f;
 `;
 
 const Title = styled.h2`
