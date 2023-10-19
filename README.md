@@ -1,5 +1,11 @@
 # MotuS-FrontEnd
 
+<div align="center">
+    <img width="720px" src="https://github.com/MotuS-Web/MotuS-FrontEnd/assets/35104213/f138f900-a288-49ec-ae92-ee70525beb36" />
+</div>
+
+<br/>
+
 비대면 운동 학습 플랫폼, "MotuS" 프론트엔드 팀 개발 저장소입니다.
 
 ## 🔥 Frontend Team
@@ -11,7 +17,7 @@
 |                                빅데이터전공 4학년                                |                                빅데이터전공 2학년                                |
 |                  [@osohyun0224](https://github.com/osohyun0224)                  |                   [@PortalCube](https://github.com/PortalCube)                   |
 
-## 🧑🏻‍💻 Development Setup
+## 🧑🏻‍💻 How to Setup
 
 1. 리포지토리를 클론하고 클론한 디렉토리에 들어갑니다.
 
@@ -20,7 +26,7 @@ git clone https://github.com/MotuS-Web/MotuS-FrontEnd
 cd MotuS-FrontEnd
 ```
 
-2. .env 파일을 열고 미리 준비한 Spring 서비스와 AI 서비스 URL을 입력합니다.
+2. .env 파일을 열고 임시 값을 모두 지운 다음, 미리 세팅한 Spring 서비스와 AI 서비스 URL을 입력합니다.
 
 ```env
 VITE_SPRING_URL=[Spring 서비스의 URL]
@@ -35,7 +41,7 @@ npm start build
 npm run dev
 ```
 
-Production의 경우, HTTPS 환경으로 배포하여야 합니다.
+주의: 본 레포지토리를 Production으로 배포하려는 경우, 사용자의 웹캠에 접근할 수 있도록 반드시 HTTPS 환경으로 배포하시기 바랍니다.
 
 ## 📚 Frontend Libraries
 
