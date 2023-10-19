@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Iconupload from "../assets/icons/iconupload.png";
+import Iconupload from "../../assets/icons/iconupload.png";
 
 const ButtonContainer = styled.button`
   padding: 12px 24px;

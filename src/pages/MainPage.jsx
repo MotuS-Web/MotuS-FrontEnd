@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import Header from "../components/Header";
-import FilterButtons from "../components/FilterButtons";
-import ExerciseCard from "../components/ExerciseCard";
-import ExerciseModal from "../components/ExerciseModal";
+import Header from "../components/header/Header";
+import FilterButtons from "../components/button/FilterButtons";
+import ExerciseCard from "../components/exercise/ExerciseCard";
+import ExerciseModal from "../components/exercise/ExerciseModal";
 import { getPrograms, searchPrograms , convertToEnglishTag } from "../librarys/exercise-api";
 import { CATEGORY, POSITION } from "../librarys/type";
 
@@ -104,7 +104,7 @@ const MainPage = () => {
 
   return (
     <PageContainer>
-      <Header onSearch={handleSearch} /> 
+      <Header onSearch={handleSearch} />
       <FilterButtons onChange={handleFilterChange} />
       <ExerciseContainer>
         {course && (
