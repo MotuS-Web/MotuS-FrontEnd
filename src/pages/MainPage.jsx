@@ -3,16 +3,23 @@ import styled from "styled-components";
 import Header from "../components/header/Header";
 import FilterButtons from "../components/button/FilterButtons";
 import ExerciseCard from "../components/exercise/ExerciseCard";
-import ExerciseModal from "../components/exercise/ExerciseModal";
+import VideoModal from "../components/VideoModal";
 import Pagination from "../components/pagnation/Pagination";
 import {
   getPrograms,
   searchPrograms,
   convertToEnglishTag,
 } from "../librarys/exercise-api";
-import { CATEGORY, POSITION } from "../librarys/type";
+import {
+  CATEGORY,
+  POSITION,
+  getCategoryDisplayName,
+  getPositionDisplayName,
+} from "../librarys/type";
+import { useDispatch } from "react-redux";
+import { show } from "../redux/modalSlice";
 
-const PageContainer = styled.div`
+const Container = styled.div`
   width: 1200px;
   padding-bottom: 64px;
   margin: auto;
@@ -33,8 +40,6 @@ const ITEMS_PER_PAGE = 6;
 
 const MainPage = () => {
   const [list, setList] = useState([]);
-  const [course, setCourse] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
     category: "전체",
     pose: "전체",
@@ -42,6 +47,7 @@ const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const dispatch = useDispatch();
 
   const handlePageChange = async (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -67,8 +73,7 @@ const MainPage = () => {
       setTotalItems(response.total || 0);
     }
   };
-  
-  
+
   const handleSearch = async (term) => {
     const englishCategory = convertToEnglishTag(
       selectedFilters.category,
@@ -89,8 +94,7 @@ const MainPage = () => {
     if (response && response.total) {
       setTotalItems(response.total);
     }
-};
-
+  };
 
   useEffect(() => {
     async function fetchCourses() {
@@ -99,26 +103,45 @@ const MainPage = () => {
         setList(response.dtoList);
       }
       if (response && response.total) {
-        
         setTotalItems(response.total || 0);
-
       }
+      console.log(response.dtoList);
       console.log("API totalCount:", response.total);
     }
     fetchCourses();
   }, []);
-  
 
   function openModal(id) {
-    const selectedCourse = list.find((course) => course.id === Number(id));
-    if (selectedCourse) {
-      const tags = [selectedCourse.category, selectedCourse.position].map(
-        convertToKoreanTag,
-      );
-      selectedCourse.tags = tags;
-      setCourse(selectedCourse);
-      setIsModalVisible(true);
+    const course = list.find((course) => course.id === Number(id));
+
+    if (!course) {
+      // 목록 갱신 오류?
+      console.error(`${id}에 해당하는 데이터가 없습니다.`);
     }
+
+    const category = getCategoryDisplayName(course.category);
+    const position = getPositionDisplayName(course.position);
+
+    console.log({
+      id: course.id,
+      url: course.videoURL,
+      title: course.title,
+      description: course.description,
+      tags: [category, position],
+    });
+
+    dispatch(
+      show({
+        id: "video",
+        props: {
+          id: course.id,
+          url: course.videoURL,
+          title: course.title,
+          description: course.description,
+          tags: [category, position],
+        },
+      }),
+    );
   }
 
   function convertToKoreanTag(tag) {
@@ -134,10 +157,10 @@ const MainPage = () => {
   const handleFilterChange = async (filters) => {
     setCurrentPage(1);
     setSelectedFilters(filters);
-  
+
     const englishCategory = convertToEnglishTag(filters.category, CATEGORY);
     const englishPose = convertToEnglishTag(filters.pose, POSITION);
-  
+
     const response = await searchPrograms(
       searchTerm,
       englishCategory,
@@ -148,7 +171,7 @@ const MainPage = () => {
     if (response && response.dtoList) {
       setList(response.dtoList);
     }
-    if (response && response.total) { 
+    if (response && response.total) {
       setTotalItems(response.total);
     }
   };
@@ -164,37 +187,27 @@ const MainPage = () => {
       !searchTerm || courseItem.name.includes(searchTerm);
     return matchesCategory && matchesPose && matchesSearchTerm;
   });
-  
+
   return (
-    <PageContainer>
+    <Container>
+      <VideoModal />
       <Header onSearch={handleSearch} />
       <FilterButtons all onChange={handleFilterChange} />
       <ExerciseContainer>
-        {course && (
-          <ExerciseModal
-            key={course.id}
-            visible={isModalVisible}
-            onClose={() => {
-              setIsModalVisible(false);
-              setCourse(null);
-            }}
-            {...course}
-          />
-        )}
-      {filteredList.map((courseItem) => {
-        const tags = [
-          convertToKoreanTag(courseItem.category),
-          convertToKoreanTag(courseItem.position),
-        ];
-        return (
-          <ExerciseCard
-            key={courseItem.id}
-            onClick={() => openModal(courseItem.id)}
-            tags={tags}
-            {...courseItem}
-          />
-        );
-      })}
+        {filteredList.map((courseItem) => {
+          const tags = [
+            convertToKoreanTag(courseItem.category),
+            convertToKoreanTag(courseItem.position),
+          ];
+          return (
+            <ExerciseCard
+              key={courseItem.id}
+              onClick={() => openModal(courseItem.id)}
+              tags={tags}
+              {...courseItem}
+            />
+          );
+        })}
       </ExerciseContainer>
       <Pagination
         totalItems={totalItems}
@@ -202,8 +215,7 @@ const MainPage = () => {
         onChange={handlePageChange}
         currentPage={currentPage}
       />
-      
-    </PageContainer>
+    </Container>
   );
 };
 
