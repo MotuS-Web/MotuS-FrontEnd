@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { useContext, useMemo, useRef, useState } from "react";
-import SkeletonVideo from "./SkeletonVideo";
-import { getSkeletons } from "../librarys/skeleton-api";
+import SkeletonVideo from "../SkeletonVideo";
+import { getSkeletons } from "../../librarys/skeleton-api";
 import classNames from "classnames";
-import { ReducerContext } from "../librarys/context.js";
+import { ReducerContext } from "../../librarys/context.js";
 
 const VideoUploadContainer = styled.div`
   width: 540px;

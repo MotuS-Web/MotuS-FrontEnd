@@ -44,12 +44,6 @@ const ModalContainer = styled.div`
   }
 `;
 
-const VideoPlaceholder = styled.div`
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  background-color: #5f5f5f;
-`;
-
 const Title = styled.h2`
   font-size: 28px;
   font-weight: bold;
