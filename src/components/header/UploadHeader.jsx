@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import LogoImage from "../../assets/logo.png";
 import BackButton from "../button/BackButton";
-import SearchBar from "./SearchBar";
-import UploadButton from "../button/UploadButton";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -28,31 +25,16 @@ const Title = styled.h2`
   flex-grow: 1;
 `;
 
-const Header = ({ isAddHeader = false, onSearch }) => {
+const UploadHeader = () => {
   const navigate = useNavigate();
-
-  if (isAddHeader) {
-    return (
-      <HeaderContainer>
-        <Logo src={LogoImage} alt="Logo" />
-        <Title>영상 게시하기</Title>
-        <BackButton onClick={() => navigate("/")} />
-      </HeaderContainer>
-    );
-  }
 
   return (
     <HeaderContainer>
       <Logo src={LogoImage} alt="Logo" onClick={() => navigate("/")} />
-      <SearchBar onSearch={onSearch} />
-      <UploadButton onClick={() => navigate("/register")} />
+      <Title>영상 게시하기</Title>
+      <BackButton onClick={() => navigate("/")} />
     </HeaderContainer>
   );
 };
 
-Header.propTypes = {
-  isAddHeader: PropTypes.bool,
-  onSearch: PropTypes.func,
-};
-
-export default Header;
+export default UploadHeader;
