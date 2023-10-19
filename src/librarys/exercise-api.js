@@ -65,8 +65,13 @@ function toExerciseSchema(data) {
   };
 }
 
-export async function getPrograms() {
-  const response = await axios.get("/video/list");
+export async function getPrograms(page, size) {
+  const params = {
+  page,
+  size
+  };
+
+  const response = await axios.get("/video/list", { params });
   response.data.dtoList = response.data.dtoList.map(toExerciseSchema);
   return response.data;
 }
@@ -76,7 +81,7 @@ export function convertToEnglishTag(tagValue, typeArray) {
   return matchedType ? matchedType.key : undefined;
 }
 
-export async function searchPrograms(title, category, position, page=1, size) {
+export async function searchPrograms(title, category, position, page=1, size=6) {
   const params = {
     title: title ? title : undefined,
     category,

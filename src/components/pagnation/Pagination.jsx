@@ -52,7 +52,7 @@ const ActiveNumber = styled(PageNumber)`
 function Pagination({ totalItems, itemsPerPage, onChange, currentPage }) {
   
   const handlePageClick = (data) => {
-    let selected = data.selected;
+    let selected = data.selected + 1;
 
     if (onChange) {
       onChange(selected);
@@ -74,7 +74,7 @@ function Pagination({ totalItems, itemsPerPage, onChange, currentPage }) {
         containerClassName={"pagination"}
         subContainerClassName={"pages pagination"}
         activeClassName={"active"}
-        forcePage={currentPage}
+        forcePage={currentPage - 1}
         pageClassName={PageNumber}
         pageLinkClassName={PageLink}
         previousLinkClassName={PageLink}

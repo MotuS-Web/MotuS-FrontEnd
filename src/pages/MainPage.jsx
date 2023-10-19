@@ -40,19 +40,22 @@ const MainPage = () => {
     pose: "전체",
   });
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const handlePageChange = (pageNumber) => {
-    const maxPageIndex = Math.max(
-      Math.ceil(filteredList.length / ITEMS_PER_PAGE) - 1,
-      0,
-    );
-    setCurrentPage(Math.min(pageNumber, maxPageIndex));
+  const handlePageChange = async (pageNumber) => {
+    setCurrentPage(pageNumber);
+    const response = await getPrograms(pageNumber, ITEMS_PER_PAGE);
+    if (response && response.dtoList) {
+      setList(response.dtoList);
+    }
+    if (response && response.total) {
+      setTotalItems(response.total || 0);
+    }
   };
-
+  
+  
   const handleSearch = async (term) => {
-    setSearchTerm(term);
-
     const englishCategory = convertToEnglishTag(
       selectedFilters.category,
       CATEGORY,
@@ -69,7 +72,11 @@ const MainPage = () => {
     if (response && response.dtoList) {
       setList(response.dtoList);
     }
-  };
+    if (response && response.total) {
+      setTotalItems(response.total);
+    }
+};
+
 
   useEffect(() => {
     async function fetchCourses() {
@@ -77,9 +84,16 @@ const MainPage = () => {
       if (response && response.dtoList) {
         setList(response.dtoList);
       }
+      if (response && response.total) {
+        
+        setTotalItems(response.total || 0);
+
+      }
+      console.log("API totalCount:", response.total);
     }
     fetchCourses();
   }, [currentPage]);
+  
 
   function openModal(id) {
     const selectedCourse = list.find((course) => course.id === Number(id));
@@ -132,7 +146,8 @@ const MainPage = () => {
       !searchTerm || courseItem.name.includes(searchTerm);
     return matchesCategory && matchesPose && matchesSearchTerm;
   });
-
+  console.log(totalItems);
+  console.log("totalItems:", totalItems, "ITEMS_PER_PAGE:", ITEMS_PER_PAGE);
   return (
     <PageContainer>
       <Header onSearch={handleSearch} />
@@ -165,11 +180,12 @@ const MainPage = () => {
         })}
       </ExerciseContainer>
       <Pagination
-        totalItems={filteredList.length}
+        totalItems={totalItems}
         itemsPerPage={ITEMS_PER_PAGE}
         onChange={handlePageChange}
         currentPage={currentPage}
       />
+      
     </PageContainer>
   );
 };
