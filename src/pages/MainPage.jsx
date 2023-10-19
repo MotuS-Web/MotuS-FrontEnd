@@ -4,7 +4,12 @@ import Header from "../components/header/Header";
 import FilterButtons from "../components/button/FilterButtons";
 import ExerciseCard from "../components/exercise/ExerciseCard";
 import ExerciseModal from "../components/exercise/ExerciseModal";
-import { getPrograms, searchPrograms , convertToEnglishTag } from "../librarys/exercise-api";
+import Pagination from "../components/pagnation/Pagination";
+import {
+  getPrograms,
+  searchPrograms,
+  convertToEnglishTag,
+} from "../librarys/exercise-api";
 import { CATEGORY, POSITION } from "../librarys/type";
 
 const PageContainer = styled.div`
@@ -23,6 +28,9 @@ const ExerciseContainer = styled.div`
   gap: 48px 60px;
 `;
 
+//페이지네이션 적용을 위해
+const ITEMS_PER_PAGE = 6;
+
 const MainPage = () => {
   const [list, setList] = useState([]);
   const [course, setCourse] = useState(null);
@@ -32,28 +40,74 @@ const MainPage = () => {
     pose: "전체",
   });
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
 
-  const handleSearch = async (term) => {
-    setSearchTerm(term);
-    
-    const englishCategory = convertToEnglishTag(selectedFilters.category, CATEGORY);
+  const handlePageChange = async (pageNumber) => {
+    setCurrentPage(pageNumber);
+
+    const englishCategory = convertToEnglishTag(
+      selectedFilters.category,
+      CATEGORY,
+    );
     const englishPose = convertToEnglishTag(selectedFilters.pose, POSITION);
-    
-    const response = await searchPrograms(term, englishCategory, englishPose);
+
+    const response = await searchPrograms(
+      null,
+      englishCategory,
+      englishPose,
+      pageNumber,
+      ITEMS_PER_PAGE,
+    );
+
     if (response && response.dtoList) {
       setList(response.dtoList);
     }
+    if (response && response.total) {
+      setTotalItems(response.total || 0);
+    }
   };
+  
+  
+  const handleSearch = async (term) => {
+    const englishCategory = convertToEnglishTag(
+      selectedFilters.category,
+      CATEGORY,
+    );
+    const englishPose = convertToEnglishTag(selectedFilters.pose, POSITION);
+
+    const response = await searchPrograms(
+      term,
+      englishCategory,
+      englishPose,
+      currentPage,
+      ITEMS_PER_PAGE,
+    );
+    if (response && response.dtoList) {
+      setList(response.dtoList);
+    }
+    if (response && response.total) {
+      setTotalItems(response.total);
+    }
+};
+
 
   useEffect(() => {
     async function fetchCourses() {
-      const response = await getPrograms();
+      const response = await getPrograms(currentPage, ITEMS_PER_PAGE);
       if (response && response.dtoList) {
         setList(response.dtoList);
       }
+      if (response && response.total) {
+        
+        setTotalItems(response.total || 0);
+
+      }
+      console.log("API totalCount:", response.total);
     }
     fetchCourses();
   }, []);
+  
 
   function openModal(id) {
     const selectedCourse = list.find((course) => course.id === Number(id));
@@ -78,14 +132,24 @@ const MainPage = () => {
   }
 
   const handleFilterChange = async (filters) => {
+    setCurrentPage(1);
     setSelectedFilters(filters);
-    
+  
     const englishCategory = convertToEnglishTag(filters.category, CATEGORY);
     const englishPose = convertToEnglishTag(filters.pose, POSITION);
-    
-    const response = await searchPrograms(searchTerm, englishCategory, englishPose);
+  
+    const response = await searchPrograms(
+      searchTerm,
+      englishCategory,
+      englishPose,
+      1,
+      ITEMS_PER_PAGE,
+    );
     if (response && response.dtoList) {
       setList(response.dtoList);
+    }
+    if (response && response.total) { 
+      setTotalItems(response.total);
     }
   };
 
@@ -96,16 +160,15 @@ const MainPage = () => {
     const matchesPose =
       selectedFilters.pose === "전체" ||
       convertToKoreanTag(courseItem.position) === selectedFilters.pose;
-    const matchesSearchTerm = !searchTerm || courseItem.name.includes(searchTerm); 
+    const matchesSearchTerm =
+      !searchTerm || courseItem.name.includes(searchTerm);
     return matchesCategory && matchesPose && matchesSearchTerm;
   });
   
-  
-
   return (
     <PageContainer>
       <Header onSearch={handleSearch} />
-      <FilterButtons onChange={handleFilterChange} />
+      <FilterButtons all onChange={handleFilterChange} />
       <ExerciseContainer>
         {course && (
           <ExerciseModal
@@ -118,21 +181,28 @@ const MainPage = () => {
             {...course}
           />
         )}
-        {filteredList.map((courseItem) => {
-          const tags = [
-            convertToKoreanTag(courseItem.category),
-            convertToKoreanTag(courseItem.position),
-          ];
-          return (
-            <ExerciseCard
-              key={courseItem.id}
-              onClick={() => openModal(courseItem.id)}
-              tags={tags}
-              {...courseItem}
-            />
-          );
-        })}
+      {filteredList.map((courseItem) => {
+        const tags = [
+          convertToKoreanTag(courseItem.category),
+          convertToKoreanTag(courseItem.position),
+        ];
+        return (
+          <ExerciseCard
+            key={courseItem.id}
+            onClick={() => openModal(courseItem.id)}
+            tags={tags}
+            {...courseItem}
+          />
+        );
+      })}
       </ExerciseContainer>
+      <Pagination
+        totalItems={totalItems}
+        itemsPerPage={ITEMS_PER_PAGE}
+        onChange={handlePageChange}
+        currentPage={currentPage}
+      />
+      
     </PageContainer>
   );
 };

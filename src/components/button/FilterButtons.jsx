@@ -64,21 +64,36 @@ const FilterButtons = ({ all, onChange }) => {
   const [poseList, setPoseList] = useState(["전체", "선", "앉은", "누운"]);
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    onChange({ category, pose: selectedPose });
-  };
+    if (selectedCategory === category) {
+      setSelectedCategory("전체");
+      onChange({ category: "전체", pose: selectedPose });
+    } else {
+      setSelectedCategory(category);
+      onChange({ category, pose: selectedPose });
+    }
+};
 
-  const handlePoseClick = (pose) => {
-    setSelectedPose(pose);
-    onChange({ category: selectedCategory, pose });
-  };
+const handlePoseClick = (pose) => {
+    if (selectedPose === pose) {
+      setSelectedPose("전체");
+      onChange({ category: selectedCategory, pose: "전체" });
+    } else {
+      setSelectedPose(pose);
+      onChange({ category: selectedCategory, pose });
+    }
+};
+
 
   useEffect(() => {
     if (!all) {
       setCategoryList(categoryList.filter((item) => item !== "전체"));
       setPoseList(poseList.filter((item) => item !== "전체"));
+    } else {
+      if (!categoryList.includes("전체")) setCategoryList(["전체", ...categoryList]);
+      if (!poseList.includes("전체")) setPoseList(["전체", ...poseList]);
     }
-  }, []);
+}, [all]);
+
 
   return (
     <Container>

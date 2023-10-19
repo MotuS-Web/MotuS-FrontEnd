@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Thumbnail from "./Thumbnail.jsx";
-import Tag from "./Tag.jsx";
+import Tag from "../exercise/Tag.jsx";
 
 const CourseCardContainer = styled.div`
   width: 360px;

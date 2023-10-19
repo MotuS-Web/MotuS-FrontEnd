@@ -10,89 +10,7 @@ const axios = getSpringAxios();
 
 const images = [arms, knee, shoulder, thigh];
 
-const courseList = [
-  {
-    id: 1,
-    title: "어깨 이완 운동 강의",
-    description: "앉은 자세에서 수행할 수 있는 어깨 이완 운동을 학습합니다.",
-    category: "어깨",
-    posture: "앉은 자세",
-    time: 15,
-    image: shoulder,
-    tags: ["어깨", "앉은 자세"],
-  },
-  {
-    id: 2,
-    title: "선 자세 팔 강화 운동",
-    description: "선 자세에서 팔 근육을 강화하는 운동을 학습합니다.",
-    category: "팔",
-    posture: "선 자세",
-    time: 15,
-    image: arms,
-    tags: ["팔", "선 자세"],
-  },
-  {
-    id: 3,
-    title: "선 자세 허벅지 강화 운동",
-    description: "선 자세에서 허벅지 근육 강화를 위한 운동을 학습합니다.",
-    category: "허벅지",
-    posture: "선 자세",
-    time: 15,
-    image: thigh,
-    tags: ["허벅지", "선 자세"],
-  },
-  {
-    id: 4,
-    title: "앉은 자세 어깨 스트레칭",
-    description: "앉은 자세에서 어깨를 스트레칭하는 운동을 학습합니다.",
-    category: "어깨",
-    posture: "앉은 자세",
-    time: 15,
-    image: shoulder,
-    tags: ["어깨", "앉은 자세"],
-  },
-  {
-    id: 5,
-    title: "선 자세 어깨 운동",
-    description: "선 자세에서 어깨 근육을 강화하고 이완하는 운동을 학습합니다.",
-    category: "어깨",
-    posture: "선 자세",
-    time: 15,
-    image: shoulder,
-    tags: ["어깨", "선 자세"],
-  },
-  {
-    id: 6,
-    title: "선 자세 허벅지 근력 운동",
-    description:
-      "선 자세와 앉은 자세에서 허벅지 근력을 키우는 운동을 학습합니다.",
-    category: "허벅지",
-    posture: "선 자세",
-    time: 15,
-    image: thigh,
-    tags: ["허벅지", "선 자세", "앉은 자세"],
-  },
-  {
-    id: 7,
-    title: "앉은 자세 어깨 밸런스 운동",
-    description: "앉은 자세에서 어깨 밸런스와 균형을 잡는 운동을 학습합니다.",
-    category: "어깨",
-    posture: "앉은 자세",
-    time: 15,
-    image: shoulder,
-    tags: ["어깨", "앉은 자세"],
-  },
-  {
-    id: 8,
-    title: "선 자세 무릎 포스쳐 교정",
-    description: "선 자세에서 무릎 포스쳐를 교정하기 위한 운동을 학습합니다.",
-    category: "무릎",
-    posture: "선 자세",
-    time: 15,
-    image: knee,
-    tags: ["무릎", "선 자세"],
-  },
-];
+
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -147,8 +65,13 @@ function toExerciseSchema(data) {
   };
 }
 
-export async function getPrograms() {
-  const response = await axios.get("/video/list");
+export async function getPrograms(page, size) {
+  const params = {
+  page,
+  size
+  };
+
+  const response = await axios.get("/video/list", { params });
   response.data.dtoList = response.data.dtoList.map(toExerciseSchema);
   return response.data;
 }
@@ -158,13 +81,13 @@ export function convertToEnglishTag(tagValue, typeArray) {
   return matchedType ? matchedType.key : undefined;
 }
 
-export async function searchPrograms(title, category, position) {
-  console.log(title, category, position);
-
+export async function searchPrograms(title, category, position, page=1, size=6) {
   const params = {
     title: title ? title : undefined,
     category,
     position,
+    page,
+    size
   };
 
   const response = await axios.get("/video/list", { params });
