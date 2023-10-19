@@ -36,6 +36,12 @@ class Player {
     return Player.#instance;
   }
 
+  clearInstance() {
+    if (Player.#instance) {
+      Player.#instance = new Player();
+    }
+  }
+
   setSubtitle(value) {
     this.dispatch({ type: "setSubtitle", payload: value });
   }

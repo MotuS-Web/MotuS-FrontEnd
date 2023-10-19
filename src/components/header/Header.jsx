@@ -4,7 +4,7 @@ import BackButton from "../button/BackButton";
 import SearchBar from "./SearchBar";
 import UploadButton from "../button/UploadButton";
 import { useNavigate } from "react-router-dom";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -18,6 +18,7 @@ const HeaderContainer = styled.div`
 const Logo = styled.img`
   height: 60px;
   object-fit: contain;
+  cursor: pointer;
 `;
 
 const Title = styled.h2`
@@ -27,7 +28,7 @@ const Title = styled.h2`
   flex-grow: 1;
 `;
 
-const Header = ({ isAddHeader = false, onSearch }) => { 
+const Header = ({ isAddHeader = false, onSearch }) => {
   const navigate = useNavigate();
 
   if (isAddHeader) {
@@ -42,8 +43,8 @@ const Header = ({ isAddHeader = false, onSearch }) => {
 
   return (
     <HeaderContainer>
-      <Logo src={LogoImage} alt="Logo" />
-      <SearchBar onSearch={onSearch} />  
+      <Logo src={LogoImage} alt="Logo" onClick={() => navigate("/")} />
+      <SearchBar onSearch={onSearch} />
       <UploadButton onClick={() => navigate("/register")} />
     </HeaderContainer>
   );
