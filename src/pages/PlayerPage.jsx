@@ -14,7 +14,7 @@ import StartupModal from "../components/player/StartupModal.jsx";
 import ResultModal from "../components/player/ResultModal.jsx";
 import { intialPlayerState, playerReducer } from "../reducer/player.js";
 import { useDispatch } from "react-redux";
-import { show } from "../redux/modalSlice.js";
+import { show, hide } from "../redux/modalSlice.js";
 import BorderBox from "../components/player/BorderBox.jsx";
 import { getVideo } from "../librarys/axios.js";
 
@@ -42,6 +42,9 @@ const PlayerPage = () => {
 
   useEffect(() => {
     modalDispatch(show("startup_notice"));
+    modalDispatch(hide("exercise_result"));
+
+    Player.clearInstance();
 
     Player.onComplete = async (time, percentage) => {
       modalDispatch(

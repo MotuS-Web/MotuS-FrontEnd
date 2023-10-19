@@ -5,8 +5,8 @@ import Player from "../../librarys/player";
 import { DispatchContext, StateContext } from "../../librarys/context.jsx";
 
 const Container = styled.div`
-  max-width: 20%;
-  min-width: 480px;
+  max-width: 420px;
+  max-height: 480px;
   width: 100%;
   position: absolute;
 
@@ -15,8 +15,9 @@ const Container = styled.div`
 `;
 
 const Video = styled.video`
-  width: 100%;
+  flex-shrink: 1;
   background-color: black;
+  overflow: hidden;
 `;
 
 const Title = styled.p`

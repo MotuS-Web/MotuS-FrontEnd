@@ -37,8 +37,8 @@ export async function createVideo(options) {
   data.append("description", options.description);
   data.append("category", options.category);
   data.append("position", options.pose);
-  data.append("frame", options.totalFrame || 90);
-  data.append("playTime", 3.4 || options.duration);
+  data.append("frame", options.totalFrame);
+  data.append("playTime", options.duration);
   data.append("files[0]", options.video);
   data.append("files[1]", options.skeleton);
 
@@ -72,6 +72,8 @@ export async function removeVideo(id) {
   const response = await axios.delete("/video/delete/" + id);
   return response.data;
 }
+
+window.removeVideo = removeVideo;
 
 export async function listVideo() {
   const axios = getSpringAxios();
