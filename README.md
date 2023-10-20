@@ -4,7 +4,7 @@
     <h2>MotuS ─ 비대면 운동 학습 플랫폼<br/>Frontend Repository</h2>
 </div>
 
-### [Check README.md in English](https://github.com/MotuS-Web/.github/blob/main/profile/README-ENG.md)
+### [Check FrontEnd README.md in English](https://github.com/MotuS-Web/MotuS-FrontEnd/blob/master/README-ENG.md)
 
 ---
 
