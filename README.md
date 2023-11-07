@@ -1,7 +1,7 @@
 <div align="center">
     <img width="720px" src="https://github.com/MotuS-Web/MotuS-FrontEnd/assets/35104213/f138f900-a288-49ec-ae92-ee70525beb36" />
     <br/>
-    <h2>MotuS ─ 비대면 운동 학습 플랫폼<br/>Frontend Repository</h2>
+    <h2>MotuS ─ 행동 유사도 측정을 위한 솔루션<br/>Frontend Repository</h2>
 </div>
 
 ### [Check FrontEnd README.md in English](https://github.com/MotuS-Web/MotuS-FrontEnd/blob/master/README-ENG.md)
